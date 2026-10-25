@@ -1,2231 +1,913 @@
 
-
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="theme-color" content="#080b14">
-
   <meta name="description" content="Un pequeño jardín de flores celestes hecho especialmente para ti.">
-
   <title>Un pequeño jardín para ti</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
   <style>
-
     :root {
-
       --background: #080b14;
+      --background-light: #11182a;
+      --blue: #8fc8ff;
+      --blue-light: #c5e5ff;
+      --text: #e0eaff;
+      --text-muted: #a4bdd8;
 
-      --blue: #86aaff;
+      --violet: #8b5cf6;
+      --violet-light: #c4b5fd;
+      --violet-dark: #5b3b9e;
 
-      --blue-light: #c3e1ff;
-
-      --blue-dark: #385aab;
-
-      --text: #f0eff8;
-
-      --muted: #9da6c0;
-
+      --cream: #211735;
     }
 
     * {
-
-      margin: 0;
-
-      padding: 0;
-
       box-sizing: border-box;
-
+      margin: 0;
+      padding: 0;
     }
 
-    html {
-
-      min-height: 100%;
-
-      background: var(--background);
-
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
     body {
-
       min-height: 100vh;
-
       min-height: 100dvh;
-
-      overflow-x: hidden;
-
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--background);
       color: var(--text);
-
-      font-family: 'DM Sans', sans-serif;
-
-      background:
-
-        radial-gradient(ellipse at 50% 45%,
-
-          #141a2b 0%, #0b0e18 48%, #070910 100%);
-
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
 
-    button {
+    /* PANTALLAS */
 
-      font: inherit;
-
-    }
-
-    button:focus-visible {
-
-      outline: 2px solid var(--blue-light);
-
-      outline-offset: 6px;
-
-    }
-
-    /* =========================
-
-       PANTALLA INICIAL
-
-    ========================= */
-
-    .splash-screen {
-
+    .screen {
       position: fixed;
-
       inset: 0;
-
-      z-index: 20;
-
       display: flex;
-
-      flex-direction: column;
-
       align-items: center;
-
       justify-content: center;
-
-      gap: 35px;
-
-      padding: 24px;
-
       overflow: hidden;
-
-      background:
-
-        radial-gradient(ellipse at 50% 48%,
-
-          #17213a 0%, #0b0e18 50%, #070910 100%);
-
-      transition:
-
-        opacity .8s ease,
-
-        visibility .8s ease;
-
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
-    .splash-screen::before {
-
-      content: "";
-
-      position: absolute;
-
-      width: 330px;
-
-      height: 330px;
-
-      border-radius: 50%;
-
-      background: rgba(91, 131, 231, .09);
-
-      filter: blur(65px);
-
-      pointer-events: none;
-
-    }
-
-    .splash-content {
-
-      position: relative;
-
-      z-index: 1;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      text-align: center;
-
-      gap: 18px;
-
-      animation: fade-in 1s ease both;
-
-    }
-
-    .splash-eyebrow {
-
-      color: #91a8e5;
-
-      font-size: 10px;
-
-      letter-spacing: 4px;
-
-      text-transform: uppercase;
-
-    }
-
-    .splash-title {
-
-      max-width: 340px;
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: clamp(34px, 8vw, 48px);
-
-      font-weight: 400;
-
-      line-height: 1.1;
-
-    }
-
-    .splash-subtitle {
-
-      color: #aab2ca;
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 19px;
-
-      font-style: italic;
-
-    }
-
-    .splash-envelope-button {
-
-      position: relative;
-
-      z-index: 1;
-
-      width: min(310px, 82vw);
-
-      aspect-ratio: 1.48;
-
-      border: 0;
-
-      padding: 0;
-
-      background: transparent;
-
-      cursor: pointer;
-
-      -webkit-tap-highlight-color: transparent;
-
-      filter: drop-shadow(0 18px 28px rgba(0,0,0,.35));
-
-      animation: envelope-float 3s ease-in-out infinite;
-
-    }
-
-    .splash-envelope {
-
-      position: absolute;
-
-      inset: 0;
-
-      perspective: 800px;
-
-    }
-
-    .splash-envelope-back {
-
-      position: absolute;
-
-      inset: 0;
-
-      border: 1px solid rgba(255,255,255,.4);
-
-      border-radius: 4px;
-
-      background: linear-gradient(145deg, #e9dcd1, #cdb9ab);
-
-    }
-
-    .splash-letter {
-
-      position: absolute;
-
-      z-index: 1;
-
-      bottom: 5px;
-
-      left: 7%;
-
-      width: 86%;
-
-      height: 84%;
-
-      border-radius: 3px;
-
-      background: linear-gradient(150deg, #f8f1e9, #ded0c4);
-
-      transition: transform .8s cubic-bezier(.2,.8,.2,1);
-
-    }
-
-    .splash-letter::before {
-
-      content: "para ti";
-
-      position: absolute;
-
-      inset: 25px 0 auto;
-
-      color: #536ba7;
-
-      text-align: center;
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 27px;
-
-      font-style: italic;
-
-    }
-
-    .splash-envelope-front {
-
-      position: absolute;
-
-      z-index: 3;
-
-      inset: 0;
-
-      overflow: hidden;
-
-      border-radius: 4px;
-
-      background: linear-gradient(145deg, #eee3d9, #d7c7ba);
-
-      clip-path: polygon(0 0, 50% 53%, 100% 0, 100% 100%, 0 100%);
-
-    }
-
-    .splash-envelope-front::before,
-
-    .splash-envelope-front::after {
-
-      content: "";
-
-      position: absolute;
-
-      inset: 0;
-
-    }
-
-    .splash-envelope-front::before {
-
-      background: linear-gradient(35deg, #c8b6a9, transparent 65%);
-
-      clip-path: polygon(0 0, 50% 53%, 0 100%);
-
-    }
-
-    .splash-envelope-front::after {
-
-      background: linear-gradient(-35deg, #e6d8cc, transparent 65%);
-
-      clip-path: polygon(100% 0, 50% 53%, 100% 100%);
-
-    }
-
-    .splash-envelope-flap {
-
-      position: absolute;
-
-      z-index: 4;
-
-      inset: 0 0 auto;
-
-      height: 60%;
-
-      background: linear-gradient(145deg, #f2e7dd, #d5c2b5);
-
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-
-      transform-origin: top center;
-
-      transition: transform .65s ease;
-
-    }
-
-    .splash-seal {
-
-      position: absolute;
-
-      z-index: 5;
-
-      top: 48%;
-
-      left: 50%;
-
-      display: grid;
-
-      place-items: center;
-
-      width: 45px;
-
-      height: 45px;
-
-      transform: translate(-50%, -50%);
-
-      border: 2px solid #91a9f5;
-
-      border-radius: 50%;
-
-      color: #e2e9ff;
-
-      font-size: 23px;
-
-      background: radial-gradient(circle at 35% 25%, #6987df, #263f85 80%);
-
-      box-shadow: 0 3px 8px rgba(20,31,77,.35);
-
-      transition: opacity .3s ease;
-
-    }
-
-    .splash-screen.opening .splash-envelope-flap {
-
-      transform: rotateX(180deg);
-
-    }
-
-    .splash-screen.opening .splash-letter {
-
-      transform: translateY(-45px);
-
-    }
-
-    .splash-screen.opening .splash-seal {
-
+    .hidden {
       opacity: 0;
-
-    }
-
-    .splash-screen.leaving {
-
-      opacity: 0;
-
       visibility: hidden;
-
       pointer-events: none;
-
     }
 
-    .splash-hint {
+    /* PANTALLA INICIAL */
 
-      position: relative;
+    #intro {
+      background:
+        radial-gradient(
+          ellipse at 50% 38%,
+          #22203b 0%,
+          #111321 48%,
+          #080b14 100%
+        );
+    }
 
-      z-index: 1;
-
+    .intro-content {
       display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 13px;
-
-      color: #aab7e4;
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 18px;
-
-      animation: fade-in 1.4s ease both;
-
-    }
-
-    .splash-hint span:first-child,
-
-    .splash-hint span:last-child {
-
-      width: 34px;
-
-      height: 1px;
-
-      background: #8298d7;
-
-    }
-
-    .splash-footer {
-
-      position: absolute;
-
-      bottom: 22px;
-
-      color: #66708c;
-
-      font-size: 9px;
-
-      letter-spacing: 3px;
-
-      text-transform: uppercase;
-
-    }
-
-    /* =========================
-
-       JARDÍN PRINCIPAL
-
-    ========================= */
-
-    .main-screen {
-
-      display: none;
-
       flex-direction: column;
-
       align-items: center;
-
-      justify-content: space-between;
-
-      min-height: 100vh;
-
-      min-height: 100dvh;
-
-      padding: 50px 20px 24px;
-
-      opacity: 0;
-
-      transition: opacity .8s ease;
-
-    }
-
-    .main-screen.visible {
-
-      display: flex;
-
-      animation: screen-appear .9s ease forwards;
-
-    }
-
-    .definition {
-
-      position: relative;
-
-      z-index: 5;
-
-      width: 100%;
-
-      max-width: 590px;
-
-      min-height: 180px;
-
-      padding-top: 8px;
-
+      gap: 28px;
+      padding: 24px;
       text-align: center;
-
-    }
-
-    .word-line {
-
-      display: flex;
-
-      align-items: baseline;
-
-      justify-content: center;
-
-      flex-wrap: wrap;
-
-      gap: 12px;
-
-      margin-bottom: 20px;
-
-    }
-
-    .word {
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: clamp(43px, 6vw, 66px);
-
-      font-weight: 400;
-
-      line-height: 1;
-
-      letter-spacing: -1.8px;
-
-    }
-
-    .category {
-
-      color: var(--blue);
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 24px;
-
-      font-style: italic;
-
-    }
-
-    .meaning {
-
-      max-width: 530px;
-
-      margin: auto;
-
-      color: #e1e3f0;
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: clamp(21px, 2.5vw, 29px);
-
-      font-weight: 400;
-
-      line-height: 1.3;
-
-    }
-
-    .ornament {
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 12px;
-
-      margin-top: 23px;
-
-      color: var(--blue);
-
-      font-size: 16px;
-
-    }
-
-    .ornament span {
-
-      width: 48px;
-
-      height: 1px;
-
-      background: var(--blue);
-
-    }
-
-    .definition.changing {
-
-      animation: fade-in .5s ease both;
-
-    }
-
-    /* ESCENA DEL SOBRE */
-
-    .garden {
-
-      position: relative;
-
-      isolation: isolate;
-
-      width: min(440px, 100%);
-
-      height: clamp(285px, 43vh, 370px);
-
-      flex-shrink: 0;
-
-      display: flex;
-
-      align-items: flex-end;
-
-      justify-content: center;
-
-      margin-top: 5px;
-
-    }
-
-    .ground {
-
-      position: absolute;
-
-      z-index: -1;
-
-      bottom: 0;
-
-      left: -20%;
-
-      width: 140%;
-
-      height: 45px;
-
-      border-radius: 50%;
-
-      background: radial-gradient(ellipse, rgba(101,126,199,.18), transparent 70%);
-
-      filter: blur(9px);
-
-    }
-
-    /* Flores que nacen dentro del sobre */
-
-    .flowers {
-
-      position: absolute;
-
-      z-index: 2;
-
-      left: 50%;
-
-      bottom: 105px;
-
-      width: 100%;
-
-      height: 245px;
-
-      transform: translateX(-50%);
-
-      pointer-events: none;
-
-    }
-
-    .flower {
-
-      --size: 48px;
-
-      --angle: 0deg;
-
-      position: absolute;
-
-      bottom: 0;
-
-      width: var(--size);
-
-      height: var(--size);
-
-      transform: translateX(-50%) rotate(var(--angle)) scale(.05);
-
-      transform-origin: center bottom;
-
-      opacity: 0;
-
-      animation: bloom .85s cubic-bezier(.2,.8,.2,1) forwards;
-
-      filter: drop-shadow(0 0 7px rgba(104,151,255,.17));
-
-    }
-
-    .flower.is-small {
-
-      --size: 30px;
-
-    }
-
-    .flower svg {
-
-      display: block;
-
-      width: 100%;
-
-      height: 100%;
-
-      overflow: visible;
-
-    }
-
-    .flower-stem {
-
-      position: absolute;
-
-      z-index: -1;
-
-      left: 50%;
-
-      bottom: -1px;
-
-      width: 2px;
-
-      height: var(--stem, 105px);
-
-      border-radius: 100%;
-
-      background: linear-gradient(to top, #465d55, #8eb49c);
-
-      transform: translateX(-50%) rotate(var(--stem-angle, 0deg));
-
-      transform-origin: bottom;
-
-    }
-
-    .flower-stem::after {
-
-      content: "";
-
-      position: absolute;
-
-      top: 48%;
-
-      left: 0;
-
-      width: 17px;
-
-      height: 8px;
-
-      border-radius: 100% 0 100% 0;
-
-      background: #6e9b7d;
-
-      transform: rotate(-35deg);
-
-    }
-
-    .flower-bloom {
-
-      position: absolute;
-
-      left: 50%;
-
-      bottom: calc(var(--stem, 105px) - 8px);
-
-      width: var(--size);
-
-      height: var(--size);
-
-      transform: translateX(-50%);
-
-    }
-
-    /* SOBRE */
-
-    .envelope-button {
-
-      position: absolute;
-
-      z-index: 3;
-
-      bottom: 0;
-
-      left: 50%;
-
-      width: min(330px, 88%);
-
-      height: clamp(165px, 24vh, 205px);
-
-      padding: 0;
-
-      border: none;
-
-      background: transparent;
-
-      transform: translateX(-50%);
-
-      perspective: 900px;
-
-      cursor: pointer;
-
-      -webkit-tap-highlight-color: transparent;
-
+      animation: appear 1.2s ease both;
     }
 
     .envelope {
+      position: relative;
+      width: min(78vw, 320px);
+      height: 205px;
+      cursor: pointer;
+      perspective: 1000px;
+      filter: drop-shadow(0 14px 25px #00000045);
+      transition: transform 0.3s ease;
+    }
 
+    .envelope:active {
+      transform: scale(0.98);
+    }
+
+    .env-back {
       position: absolute;
-
       inset: 0;
-
-      filter: drop-shadow(0 14px 24px rgba(0,0,0,.34));
-
-      transition: transform .35s ease;
-
+      border-radius: 5px;
+      background: #6541a5;
+      border: 1px solid #9b7ae0;
     }
 
-    .envelope-button:hover .envelope {
-
-      transform: translateY(-3px);
-
-    }
-
-    .envelope-back {
-
+    .env-front {
       position: absolute;
-
       inset: 0;
-
-      border: 1px solid rgba(255,255,255,.45);
-
-      border-radius: 4px;
-
-      background: #d9c9bc;
-
-    }
-
-    .letter {
-
-      position: absolute;
-
-      z-index: 1;
-
-      bottom: 5px;
-
-      left: 6%;
-
-      width: 88%;
-
-      height: 83%;
-
-      border-radius: 3px;
-
-      background: linear-gradient(150deg, #f4eee8, #dcd0c5);
-
-      transition: transform .75s cubic-bezier(.2,.8,.2,1);
-
-    }
-
-    .letter::before {
-
-      content: "para ti";
-
-      position: absolute;
-
-      top: 25px;
-
-      left: 0;
-
-      width: 100%;
-
-      color: #4c6090;
-
-      text-align: center;
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 23px;
-
-      font-style: italic;
-
-    }
-
-    .envelope-front {
-
-      position: absolute;
-
-      z-index: 3;
-
-      inset: 0;
-
       overflow: hidden;
-
-      border-radius: 4px;
-
-      background: linear-gradient(145deg, #eee3d9, #d7c7ba);
-
-      clip-path: polygon(0 0, 50% 53%, 100% 0, 100% 100%, 0 100%);
-
+      background: #8b5cf6;
+      clip-path: polygon(
+        0 0,
+        50% 58%,
+        100% 0,
+        100% 100%,
+        0 100%
+      );
+      border-radius: 5px;
+      z-index: 3;
     }
 
-    .envelope-front::before,
-
-    .envelope-front::after {
-
-      content: "";
-
+    .env-left,
+    .env-right {
       position: absolute;
-
       inset: 0;
-
+      z-index: 2;
     }
 
-    .envelope-front::before {
-
-      background: linear-gradient(35deg, #c8b6a9, transparent 55%);
-
-      clip-path: polygon(0 0, 50% 53%, 0 100%);
-
+    .env-left {
+      background: #7750c7;
+      clip-path: polygon(0 0, 50% 58%, 0 100%);
     }
 
-    .envelope-front::after {
-
-      background: linear-gradient(-35deg, #e6d8cc, transparent 55%);
-
-      clip-path: polygon(100% 0, 50% 53%, 100% 100%);
-
+    .env-right {
+      background: #6844b4;
+      clip-path: polygon(100% 0, 50% 58%, 100% 100%);
     }
 
-    .envelope-flap {
-
+    .env-flap {
       position: absolute;
-
-      z-index: 5;
-
       top: 0;
-
       left: 0;
-
       width: 100%;
-
       height: 60%;
-
+      z-index: 4;
       transform-origin: top center;
-
-      transition: transform .65s ease;
-
-      background: linear-gradient(145deg, #f2e7dd, #d5c2b5);
-
+      background: #a78bfa;
       clip-path: polygon(0 0, 100% 0, 50% 100%);
-
+      transition:
+        transform 0.8s ease,
+        z-index 0s 0.4s;
+      border-top: 1px solid #c4b5fd;
+      backface-visibility: visible;
     }
 
     .seal {
-
       position: absolute;
-
-      z-index: 6;
-
-      top: 48%;
-
+      z-index: 5;
       left: 50%;
-
-      display: grid;
-
-      place-items: center;
-
-      width: 43px;
-
-      height: 43px;
-
+      top: 58%;
       transform: translate(-50%, -50%);
-
-      border: 2px solid #91a9f5;
-
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
       border-radius: 50%;
-
-      color: #e2e9ff;
-
+      color: #ffffff;
+      background: #6d45bb;
+      border: 1px solid #c4b5fd;
+      box-shadow: 0 3px 12px #35205c35;
       font-size: 22px;
-
-      background: radial-gradient(circle at 35% 25%, #6987df, #263f85 80%);
-
-      box-shadow: 0 3px 8px rgba(20,31,77,.35);
-
-      transition: opacity .3s ease;
-
+      transition: opacity 0.3s;
     }
 
-    .garden.opened .envelope-flap {
-
-      z-index: 0;
-
-      transform: rotateX(180deg);
-
-    }
-
-    .garden.opened .letter {
-
-      transform: translateY(-45px);
-
-    }
-
-    .garden.opened .seal {
-
-      opacity: 0;
-
-    }
-
-    /* PÉTALOS */
-
-    .petal-fall {
-
+    .letter {
       position: absolute;
-
-      z-index: 4;
-
-      width: 13px;
-
-      height: 8px;
-
-      border-radius: 100% 0 100% 0;
-
-      background: linear-gradient(135deg, #c1dfff, #608fff);
-
-      pointer-events: none;
-
-      animation: drift 3s ease-out forwards;
-
-    }
-
-    /* INDICACIÓN */
-
-    .instruction {
-
-      position: relative;
-
-      z-index: 6;
-
+      z-index: 1;
+      left: 7%;
+      width: 86%;
+      height: 82%;
+      top: 8%;
+      padding: 22px 10px;
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
-      gap: 13px;
-
-      margin-top: 12px;
-
-      padding: 12px 0;
-
-      border: 0;
-
-      background: transparent;
-
-      color: #aab7e4;
-
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 18px;
-
-      cursor: pointer;
-
-      transition: color .25s ease;
-
-    }
-
-    .instruction:hover {
-
-      color: #fff;
-
-    }
-
-    .instruction .line {
-
-      width: 38px;
-
-      height: 1px;
-
-      background: #8298d7;
-
-    }
-
-    .instruction .hand {
-
-      display: inline-block;
-
-      font-family: sans-serif;
-
-      font-size: 22px;
-
-      animation: tap 1.7s ease-in-out infinite;
-
-    }
-
-    .small-note {
-
-      margin-top: 8px;
-
-      color: #66708c;
-
-      font-size: 9px;
-
-      letter-spacing: 3px;
-
       text-align: center;
+      background: #f8f3ff;
+      color: #7651b5;
+      font-style: italic;
+      border-radius: 3px;
+      transition: transform 1s ease;
+    }
 
+    .envelope.open .env-flap {
+      transform: rotateX(180deg);
+      z-index: 0;
+    }
+
+    .envelope.open .seal {
+      opacity: 0;
+    }
+
+    .envelope.open .letter {
+      transform: translateY(-80px);
+    }
+
+    .intro-title {
+      font-size: clamp(23px, 6vw, 32px);
+      font-weight: normal;
+      letter-spacing: 0.3px;
+      color: #d8c8ff;
+    }
+
+    .intro-subtitle {
+      max-width: 270px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: #b6a8d8;
+      font-style: italic;
+    }
+
+    .hint {
+      margin-top: 3px;
+      font-family: Arial, sans-serif;
       text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 9px;
+      color: #a78bfa;
+      animation: breathe 2.5s infinite;
+    }
 
+    /* JARDÍN DE FLORES */
+
+    #garden {
+      background:
+        radial-gradient(
+          ellipse at 50% 42%,
+          #192238 0%,
+          #0d1424 48%,
+          #080b14 100%
+        );
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    #flower-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    /* FLORES */
+
+    .flower {
+      position: absolute;
+      width: var(--size, 46px);
+      height: calc(var(--size, 46px) * 1.7);
+      transform-origin: 50% 100%;
+      animation: grow 0.8s cubic-bezier(.2, .8, .3, 1) both;
+      filter: drop-shadow(0 0 5px #8fc8ff25);
+    }
+
+    .flower .stem {
+      position: absolute;
+      top: 32%;
+      left: 48%;
+      width: 2px;
+      height: 65%;
+      border-radius: 100%;
+      background: linear-gradient(#85bb88, #b2d6a7);
+      transform: rotate(var(--lean, 8deg));
+      transform-origin: top;
+    }
+
+    .flower .leaf {
+      position: absolute;
+      top: 57%;
+      left: 48%;
+      width: 34%;
+      height: 12%;
+      border-radius: 100% 0 100% 0;
+      background: #78ad83;
+      transform: rotate(-30deg);
+    }
+
+    .flower .leaf.second {
+      top: 70%;
+      left: 28%;
+      transform: rotate(40deg) scaleX(-1);
+    }
+
+    .flower .head {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 62%;
+      aspect-ratio: 1;
+      transform: translateX(-50%);
+    }
+
+    .flower .petal {
+      position: absolute;
+      width: 43%;
+      height: 43%;
+      left: 28.5%;
+      top: 28.5%;
+      border-radius: 50%;
+      background: #8fc2ed;
+      border: 1px solid #b3d8f6;
+      transform-origin: 50% 50%;
+      box-shadow:
+        inset -2px -2px 4px #5d9dd822,
+        0 0 5px #8fc8ff20;
+    }
+
+    .flower .center {
+      position: absolute;
+      width: 19%;
+      height: 19%;
+      top: 40.5%;
+      left: 40.5%;
+      background: #f8dba0;
+      border-radius: 50%;
+      border: 1px solid #f2c875;
+    }
+
+    /* FRASES */
+
+    .garden-content {
+      position: relative;
+      z-index: 2;
+      width: min(88%, 430px);
+      padding: 30px 20px;
+      text-align: center;
+      pointer-events: none;
+      margin-top: -5px;
+    }
+
+    .phrase-card {
+      padding: 27px 17px;
+      border-radius: 3px;
+      background: #111827a8;
+      border: 1px solid #b5d8ff18;
+      box-shadow: 0 10px 40px #00000012;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      animation: appear 0.7s ease both;
+    }
+
+    .phrase-word {
+      margin-bottom: 20px;
+      font-size: clamp(19px, 5vw, 24px);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      font-weight: normal;
+      color: #a9d6ff;
+    }
+
+    .phrase-definition {
+      font-size: clamp(16px, 4.2vw, 20px);
+      font-style: italic;
+      line-height: 1.85;
+      color: #e0eaff;
+    }
+
+    .phrase-divider {
+      width: 30px;
+      height: 1px;
+      margin: 23px auto 0;
+      background: #7caedb;
+    }
+
+    .garden-hint {
+      margin-top: 23px;
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      line-height: 1.8;
+      text-transform: uppercase;
+      color: #a4bdd8;
+      opacity: 0.9;
     }
 
     /* ANIMACIONES */
 
-    @keyframes fade-in {
-
+    @keyframes appear {
       from {
-
         opacity: 0;
-
-        transform: translateY(9px);
-
+        transform: translateY(12px);
       }
 
       to {
-
         opacity: 1;
-
         transform: translateY(0);
+      }
+    }
 
+    @keyframes breathe {
+      0%, 100% {
+        opacity: 0.55;
       }
 
-    }
-
-    @keyframes screen-appear {
-
-      from { opacity: 0; }
-
-      to { opacity: 1; }
-
-    }
-
-    @keyframes envelope-float {
-
-      0%, 100% { transform: translateY(0); }
-
-      50% { transform: translateY(-7px); }
-
-    }
-
-    @keyframes bloom {
-
-      0% {
-
-        opacity: 0;
-
-        transform: translateX(-50%) rotate(var(--angle)) scale(.05);
-
-      }
-
-      65% {
-
+      50% {
         opacity: 1;
-
-        transform: translateX(-50%) rotate(var(--angle)) scale(1.08);
-
       }
-
-      100% {
-
-        opacity: 1;
-
-        transform: translateX(-50%) rotate(var(--angle)) scale(1);
-
-      }
-
     }
 
-    @keyframes drift {
-
-      0% {
-
-        opacity: .9;
-
-        transform: translate(0,0) rotate(0deg);
-
-      }
-
-      100% {
-
+    @keyframes grow {
+      from {
         opacity: 0;
-
-        transform: translate(var(--dx),var(--dy)) rotate(280deg);
-
+        transform: scale(0.1) rotate(-15deg);
       }
 
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
     }
 
-    @keyframes tap {
+    /* ADAPTACIÓN A CELULARES */
 
-      0%, 100% { transform: translateY(0); }
-
-      50% { transform: translateY(-5px); }
-
-    }
-
-    /* =========================
-
-       RESPONSIVE
-
-    ========================= */
-
-    @media (min-width: 900px) {
-
-      .main-screen {
-
-        padding-top: 55px;
-
+    @media (max-height: 560px) {
+      .intro-content {
+        gap: 14px;
       }
 
-      .garden {
-
-        width: 460px;
-
-        height: 350px;
-
-      }
-
-    }
-
-    @media (max-width: 600px) {
-
-      .main-screen {
-
-        padding: max(30px, env(safe-area-inset-top)) 17px
-
-                 max(22px, env(safe-area-inset-bottom));
-
-        min-height: 100svh;
-
-        min-height: 100dvh;
-
-      }
-
-      .definition {
-
-        min-height: 175px;
-
-        padding-top: 10px;
-
-      }
-
-      .word {
-
-        font-size: clamp(41px, 11vw, 58px);
-
-      }
-
-      .category {
-
-        font-size: 20px;
-
-      }
-
-      .word-line {
-
-        gap: 8px;
-
-        margin-bottom: 17px;
-
-      }
-
-      .meaning {
-
-        max-width: 360px;
-
-        font-size: clamp(21px, 5.8vw, 26px);
-
-      }
-
-      .ornament {
-
-        margin-top: 19px;
-
-      }
-
-      .garden {
-
-        width: min(390px, 100%);
-
-        height: clamp(260px, 38vh, 330px);
-
-        margin-top: 0;
-
-      }
-
-      .flowers {
-
-        height: 225px;
-
-        bottom: 92px;
-
-      }
-
-      .flower {
-
-        --size: 40px;
-
-      }
-
-      .flower.is-small {
-
-        --size: 25px;
-
-      }
-
-      .envelope-button {
-
-        width: min(310px, 88%);
-
-        height: clamp(155px, 22vh, 190px);
-
-      }
-
-      .instruction {
-
-        margin-top: 6px;
-
-        font-size: 16px;
-
-      }
-
-      .instruction .line {
-
-        width: 28px;
-
-      }
-
-      .small-note {
-
-        font-size: 8px;
-
-        letter-spacing: 2px;
-
-      }
-
-      .splash-content {
-
-        gap: 16px;
-
-      }
-
-      .splash-envelope-button {
-
-        width: min(300px, 82vw);
-
-      }
-
-      .splash-footer {
-
-        bottom: max(18px, env(safe-area-inset-bottom));
-
-      }
-
-    }
-
-    @media (max-height: 700px) and (min-width: 601px) {
-
-      .main-screen {
-
-        padding-top: 25px;
-
-        padding-bottom: 15px;
-
-      }
-
-      .definition {
-
-        min-height: 150px;
-
-      }
-
-      .garden {
-
-        height: 280px;
-
-      }
-
-      .small-note {
-
-        margin-top: 2px;
-
-      }
-
-    }
-
-    @media (max-width: 360px) {
-
-      .main-screen {
-
-        padding-left: 12px;
-
-        padding-right: 12px;
-
-      }
-
-      .word {
-
-        font-size: 39px;
-
-      }
-
-      .category {
-
-        font-size: 18px;
-
-      }
-
-      .garden {
-
-        height: 255px;
-
-      }
-
-      .flowers {
-
-        bottom: 88px;
-
-        height: 210px;
-
-      }
-
-      .envelope-button {
-
+      .envelope {
         height: 150px;
-
       }
 
-      .flower {
-
-        --size: 34px;
-
+      .garden-content {
+        padding: 12px;
       }
 
-      .flower.is-small {
-
-        --size: 23px;
-
+      .phrase-card {
+        padding: 16px 12px;
       }
 
+      .phrase-word {
+        margin-bottom: 10px;
+      }
+
+      .phrase-divider {
+        margin-top: 12px;
+      }
+
+      .garden-hint {
+        margin-top: 12px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-
       *,
-
       *::before,
-
       *::after {
-
-        animation-duration: .01ms !important;
-
+        animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-
-        scroll-behavior: auto !important;
-
-        transition-duration: .01ms !important;
-
+        transition-duration: 0.01ms !important;
       }
-
     }
-
   </style>
-
 </head>
 
 <body>
 
-  <!-- PANTALLA INICIAL: SOLO EL SOBRE -->
+  <!-- PRIMERA PANTALLA: CARTA -->
 
-  <section class="splash-screen" id="splashScreen">
+  <section id="intro" class="screen">
+    <div class="intro-content">
 
-    <div class="splash-content">
-
-      <p class="splash-eyebrow">Un detalle para ti</p>
-
-      <h1 class="splash-title">
-
-        Hay cosas bonitas<br>
-
-        esperando por ti
-
-      </h1>
-
-      <p class="splash-subtitle">
-
-        He preparado algo especial...
-
-      </p>
-
-    </div>
-
-    <button
-
-      class="splash-envelope-button"
-
-      id="splashEnvelopeButton"
-
-      aria-label="Abrir el sobre para descubrir tu jardín"
-
-    >
-
-      <div class="splash-envelope">
-
-        <div class="splash-envelope-back"></div>
-
-        <div class="splash-letter"></div>
-
-        <div class="splash-envelope-front"></div>
-
-        <div class="splash-envelope-flap"></div>
-
-        <div class="splash-seal">♡</div>
-
-      </div>
-
-    </button>
-
-    <p class="splash-hint">
-
-      <span></span>
-
-      Toca el sobre
-
-      <span></span>
-
-    </p>
-
-    <p class="splash-footer">Hecho con cariño para ti</p>
-
-  </section>
-
-  <!-- JARDÍN PRINCIPAL -->
-
-  <main class="main-screen" id="mainScreen">
-
-    <header class="definition" id="definition" aria-live="polite">
-
-      <div class="word-line">
-
-        <h2 class="word" id="word">Hermoso</h2>
-
-        <span class="category" id="category">(adj.)</span>
-
-      </div>
-
-      <p class="meaning" id="meaning">
-
-        Que causa admiración por su belleza, armonía o perfección.
-
-      </p>
-
-      <div class="ornament" aria-hidden="true">
-
-        <span></span>
-
-        <span style="width:auto;height:auto;background:none">♥</span>
-
-        <span></span>
-
-      </div>
-
-    </header>
-
-    <section class="garden" id="garden" aria-label="Jardín de flores celestes">
-
-      <div class="ground"></div>
-
-      <div class="flowers" id="flowers" aria-hidden="true"></div>
-
-      <button
-
-        class="envelope-button"
-
-        id="envelopeButton"
-
-        aria-label="Tocar el sobre para hacer brotar más flores"
-
+      <div
+        class="envelope"
+        id="envelope"
+        role="button"
+        tabindex="0"
+        aria-label="Abrir la carta"
       >
+        <div class="env-back"></div>
 
-        <div class="envelope">
-
-          <div class="envelope-back"></div>
-
-          <div class="letter"></div>
-
-          <div class="envelope-front"></div>
-
-          <div class="envelope-flap"></div>
-
-          <div class="seal">♡</div>
-
+        <div class="letter">
+          <span>Un pequeño jardín para ti.</span>
         </div>
 
-      </button>
+        <div class="env-left"></div>
+        <div class="env-right"></div>
+        <div class="env-front"></div>
+        <div class="env-flap"></div>
 
-    </section>
+        <div class="seal" aria-hidden="true">✿</div>
+      </div>
 
-    <button class="instruction" id="instruction">
+      <h1 class="intro-title">Para ti</h1>
 
-      <span class="line"></span>
+      <p class="intro-subtitle">
+        Hay algo bonito esperando por vos...
+      </p>
 
-      <span class="hand" aria-hidden="true">♧</span>
+      <p class="hint">Tocá la carta para abrirla</p>
 
-      <span>Toca el sobre</span>
+    </div>
+  </section>
 
-      <span class="line"></span>
+  <!-- SEGUNDA PANTALLA: JARDÍN -->
 
-    </button>
+  <section
+    id="garden"
+    class="screen hidden"
+    aria-label="Jardín de flores celestes"
+  >
+    <div id="flower-layer"></div>
 
-    <p class="small-note">Un pequeño jardín hecho para ti</p>
+    <main class="garden-content">
+      <div class="phrase-card" id="phrase-card" aria-live="polite">
+        <h2 class="phrase-word" id="phrase-word">Belleza</h2>
 
-  </main>
+        <p class="phrase-definition" id="phrase-definition">
+          Cualidad de lo bello, que despierta admiración y deleite.
+        </p>
+
+        <div class="phrase-divider"></div>
+      </div>
+
+      <p class="garden-hint">
+        Tocá la pantalla para hacer florecer el jardín
+      </p>
+    </main>
+  </section>
 
   <script>
+    const intro = document.getElementById("intro");
+    const garden = document.getElementById("garden");
+    const envelope = document.getElementById("envelope");
+    const flowerLayer = document.getElementById("flower-layer");
+    const phraseCard = document.getElementById("phrase-card");
+    const phraseWord = document.getElementById("phrase-word");
+    const phraseDefinition = document.getElementById("phrase-definition");
 
-    const definitions = [
+    let opened = false;
+    let lastPhraseIndex = -1;
 
+    const phrases = [
       {
-
-        word: "Hermoso",
-
-        category: "adj.",
-
-        meaning: "Que causa admiración por su belleza, armonía o perfección."
-
+        word: "Belleza",
+        definition: "Cualidad de lo bello, que despierta admiración y deleite."
       },
-
       {
-
-        word: "Bello",
-
-        category: "adj.",
-
-        meaning: "Que, por la perfección de sus formas, complace a la vista o al espíritu."
-
-      },
-
-      {
-
-        word: "Sublime",
-
-        category: "adj.",
-
-        meaning: "Que eleva la emoción y despierta una admiración extraordinaria."
-
-      },
-
-      {
-
-        word: "Precioso",
-
-        category: "adj.",
-
-        meaning: "De gran belleza o valor; digno de ser contemplado y atesorado."
-
-      },
-
-      {
-
         word: "Encanto",
-
-        category: "s. m.",
-
-        meaning: "Cualidad de aquello que cautiva los sentidos y conquista el corazón."
-
+        definition: "Aquello que cautiva de una manera difícil de explicar."
       },
-
       {
-
-        word: "Radiante",
-
-        category: "adj.",
-
-        meaning: "Que resplandece de alegría, luz o una belleza imposible de ocultar."
-
+        word: "Hermosura",
+        definition: "Cualidad que hace que algo resulte digno de contemplar."
       },
-
       {
-
-        word: "Exquisito",
-
-        category: "adj.",
-
-        meaning: "De singular y extraordinaria belleza, delicadeza o refinamiento."
-
+        word: "Admiración",
+        definition: "Sentimiento que nace al descubrir algo extraordinario."
       },
-
       {
-
+        word: "Delicadeza",
+        definition: "Cualidad de aquello que inspira ternura y cuidado."
+      },
+      {
+        word: "Esplendor",
+        definition: "Brillo y belleza que destacan de manera extraordinaria."
+      },
+      {
+        word: "Armonía",
+        definition: "Grata proporción y correspondencia entre las cosas."
+      },
+      {
         word: "Gracia",
-
-        category: "s. f.",
-
-        meaning: "Cualidad que hace agradable, armonioso y encantador a alguien."
-
+        definition: "Cualidad que hace que algo resulte agradable y especial."
       },
-
       {
-
-        word: "Magnífico",
-
-        category: "adj.",
-
-        meaning: "Que destaca por su esplendor, excelencia o grandeza."
-
-      },
-
-      {
-
-        word: "Etéreo",
-
-        category: "adj.",
-
-        meaning: "De delicadeza tan sutil que parece pertenecer a otro mundo."
-
-      },
-
-      {
-
-        word: "Fascinante",
-
-        category: "adj.",
-
-        meaning: "Que atrae poderosamente la atención por su singular belleza."
-
-      },
-
-      {
-
-        word: "Idílico",
-
-        category: "adj.",
-
-        meaning: "Que parece perfecto, apacible y hermoso como un sueño."
-
-      },
-
-      {
-
-        word: "Delicado",
-
-        category: "adj.",
-
-        meaning: "Que revela belleza y ternura en sus formas más sutiles."
-
-      },
-
-      {
-
-        word: "Único",
-
-        category: "adj.",
-
-        meaning: "Que no tiene igual y cuya esencia no puede repetirse."
-
-      },
-
-      {
-
         word: "Maravilla",
-
-        category: "s. f.",
-
-        meaning: "Cosa que causa profunda admiración por su belleza o perfección."
-
+        definition: "Aquello que causa admiración por su belleza extraordinaria."
       },
-
       {
-
-        word: "Florido",
-
-        category: "adj.",
-
-        meaning: "Que está lleno de flores; símbolo de vida, renovación y belleza."
-
+        word: "Luz",
+        definition: "Claridad que ilumina; aquello que vuelve todo más bello."
       },
-
       {
-
-        word: "Resplandor",
-
-        category: "s. m.",
-
-        meaning: "Luz que irradia algo hermoso y atrae todas las miradas."
-
+        word: "Única",
+        definition: "Que no tiene semejante y resulta imposible de reemplazar."
       },
-
       {
-
-        word: "Inefable",
-
-        category: "adj.",
-
-        meaning: "Tan extraordinario que las palabras no alcanzan para describirlo."
-
+        word: "Ternura",
+        definition: "Sentimiento de cariño que inspira suavidad y dulzura."
       },
-
       {
-
-        word: "Atemporal",
-
-        category: "adj.",
-
-        meaning: "Que conserva su belleza sin depender del paso del tiempo."
-
+        word: "Autenticidad",
+        definition: "Cualidad de ser genuino, verdadero y fiel a uno mismo."
       },
-
       {
-
+        word: "Adorable",
+        definition: "Digno de cariño, afecto y admiración."
+      },
+      {
+        word: "Fascinación",
+        definition: "Atracción intensa que despierta algo extraordinario."
+      },
+      {
+        word: "Belleza interior",
+        definition: "Aquella que nace de la esencia y se refleja en los actos."
+      },
+      {
+        word: "Encantadora",
+        definition: "Que atrae por su dulzura, su gracia o su manera de ser."
+      },
+      {
+        word: "Excepcional",
+        definition: "Que se distingue de lo común por sus cualidades."
+      },
+      {
+        word: "Inolvidable",
+        definition: "Que por su importancia o belleza permanece en la memoria."
+      },
+      {
+        word: "Esencia",
+        definition: "Lo más puro y característico de alguien."
+      },
+      {
+        word: "Poético",
+        definition: "Que expresa belleza, emoción y sensibilidad."
+      },
+      {
+        word: "Serenidad",
+        definition: "Calma y armonía que transmiten paz."
+      },
+      {
+        word: "Resplandecer",
+        definition: "Brillar con luz propia."
+      },
+      {
+        word: "Asombro",
+        definition: "Admiración que nace ante algo extraordinario."
+      },
+      {
+        word: "Especial",
+        definition: "Que sobresale por una cualidad que lo hace diferente."
+      },
+      {
+        word: "Apreciar",
+        definition: "Reconocer el valor y la belleza de algo o alguien."
+      },
+      {
+        word: "Sublime",
+        definition: "Tan bello o extraordinario que despierta una emoción profunda."
+      },
+      {
+        word: "Perfectamente imperfecta",
+        definition: "La belleza de ser real, sin necesidad de ser perfecta."
+      },
+      {
         word: "Admirable",
-
-        category: "adj.",
-
-        meaning: "Digno de contemplación, aprecio y profunda admiración."
-
+        definition: "Que merece estima, respeto y admiración."
+      },
+      {
+        word: "Preciosa",
+        definition: "De gran belleza, valor o especial encanto."
+      },
+      {
+        word: "Felicidad",
+        definition: "Estado de grata satisfacción espiritual y física."
+      },
+      {
+        word: "Magia",
+        definition: "Encanto que parece transformar lo cotidiano en algo extraordinario."
+      },
+      {
+        word: "Auténtica belleza",
+        definition: "Aquella que no necesita comparaciones para ser reconocida."
+      },
+      {
+        word: "Infinito",
+        definition: "Que no tiene fin ni límite."
+      },
+      {
+        word: "Admirarte",
+        definition: "Encontrar siempre algo hermoso que descubrir en vos."
+      },
+      {
+        word: "Florecer",
+        definition: "Desarrollarse con belleza y plenitud."
+      },
+      {
+        word: "Extraordinaria",
+        definition: "Que se distingue por cualidades que despiertan admiración."
+      },
+      {
+        word: "Inspiración",
+        definition: "Estímulo que despierta ideas, emociones o belleza."
+      },
+      {
+        word: "Belleza natural",
+        definition: "La que aparece sin artificios, en la sencillez de lo auténtico."
+      },
+      {
+        word: "Tesoro",
+        definition: "Algo muy valioso que merece ser cuidado."
+      },
+      {
+        word: "Inmensidad",
+        definition: "Grandeza que parece no tener límites."
+      },
+      {
+        word: "Afecto",
+        definition: "Inclinación cariñosa hacia alguien."
+      },
+      {
+        word: "Dulzura",
+        definition: "Cualidad de quien inspira cariño y ternura."
+      },
+      {
+        word: "Encanto natural",
+        definition: "La cualidad de cautivar sin siquiera intentarlo."
+      },
+      {
+        word: "Luminosa",
+        definition: "Que transmite luz, alegría o una sensación de calidez."
+      },
+      {
+        word: "Singular",
+        definition: "Que destaca por ser particular y diferente de los demás."
+      },
+      {
+        word: "Gratitud",
+        definition: "Sentimiento de reconocimiento por el bien recibido."
+      },
+      {
+        word: "Asombrosa",
+        definition: "Que causa sorpresa y admiración por sus cualidades."
+      },
+      {
+        word: "Incomparable",
+        definition: "Que no encuentra algo igual con lo que pueda compararse."
+      },
+      {
+        word: "Amor",
+        definition: "Sentimiento de afecto profundo que inspira cuidado y entrega."
+      },
+      {
+        word: "Florecer juntos",
+        definition: "Crecer compartiendo la belleza de cada nuevo día."
+      },
+      {
+        word: "Tu sonrisa",
+        definition: "Una pequeña expresión capaz de volver más bonito un día."
+      },
+      {
+        word: "Tu mirada",
+        definition: "Una forma silenciosa de decir mucho sin pronunciar palabras."
+      },
+      {
+        word: "Tu esencia",
+        definition: "Eso que te hace ser vos y nadie más."
+      },
+      {
+        word: "Tu presencia",
+        definition: "La manera en que alguien puede hacer más lindo un lugar."
+      },
+      {
+        word: "Tu forma de ser",
+        definition: "Una belleza que se descubre en los pequeños detalles."
+      },
+      {
+        word: "Lo auténtico",
+        definition: "Aquello que conserva su valor sin necesitar aparentar."
+      },
+      {
+        word: "Lo extraordinario",
+        definition: "Aquello que transforma un instante común en un recuerdo especial."
+      },
+      {
+        word: "Admiración sincera",
+        definition: "Reconocer la belleza de alguien sin necesidad de exagerarla."
+      },
+      {
+        word: "Gracias por existir",
+        definition: "Hay personas cuya presencia hace más bonito el mundo."
+      },
+      {
+        word: "Para vos",
+        definition: "Porque algunas cosas bonitas merecen ser compartidas."
       }
-
     ];
 
-    const $ = (id) => document.getElementById(id);
+    // ABRIR LA CARTA
 
-    const splashScreen = $("splashScreen");
+    function openLetter() {
+      if (opened) return;
+      opened = true;
 
-    const splashEnvelopeButton = $("splashEnvelopeButton");
+      envelope.classList.add("open");
 
-    const mainScreen = $("mainScreen");
+      setTimeout(() => {
+        intro.classList.add("hidden");
+        garden.classList.remove("hidden");
 
-    const garden = $("garden");
-
-    const flowers = $("flowers");
-
-    const envelopeButton = $("envelopeButton");
-
-    const definitionElement = $("definition");
-
-    let currentDefinition = 0;
-
-    let flowerCount = 0;
-
-    let isOpening = false;
-
-    let gardenOpened = false;
-
-    /* SVG DE LAS FLORES CELESTES */
-
-    function flowerSVG() {
-
-      return `
-
-        <svg viewBox="-30 -30 60 60" aria-hidden="true">
-
-          <defs>
-
-            <linearGradient
-
-              id="petal-${Math.random().toString(36).slice(2)}"
-
-              x1="0" y1="0" x2="1" y2="1"
-
-            >
-
-              <stop offset="0%" stop-color="#c3e1ff"/>
-
-              <stop offset="55%" stop-color="#83b4ff"/>
-
-              <stop offset="100%" stop-color="#5484ed"/>
-
-            </linearGradient>
-
-          </defs>
-
-          <g fill="#83b4ff" stroke="#c7e2ff" stroke-width=".65">
-
-            <ellipse cx="0" cy="-13" rx="7.5" ry="13"/>
-
-            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(45)"/>
-
-            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(90)"/>
-
-            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(135)"/>
-
-            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(180)"/>
-
-            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(225)"/>
-
-            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(270)"/>
-
-            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(315)"/>
-
-          </g>
-
-          <circle r="5" fill="#f4dca5" stroke="#fff0c6" stroke-width="1"/>
-
-          <circle cx="-1.5" cy="-1" r="1" fill="#fff4d2"/>
-
-          <circle cx="1.5" cy="1.2" r=".8" fill="#c69a4d"/>
-
-        </svg>
-
-      `;
-
+        addFlowers(11);
+        changePhrase();
+      }, 950);
     }
 
-    /* CREAR UNA FLOR CON SU TALLO */
+    envelope.addEventListener("click", openLetter);
 
-    function createFlower(container, index, options = {}) {
+    envelope.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openLetter();
+      }
+    });
 
+    // CREAR FLORES
+
+    function createFlower(x, y, size, delay = 0) {
       const flower = document.createElement("div");
-
       flower.className = "flower";
 
-      if (Math.random() > 0.55) {
+      flower.style.left = `${x}%`;
+      flower.style.top = `${y}%`;
+      flower.style.setProperty("--size", `${size}px`);
+      flower.style.setProperty(
+        "--lean",
+        `${Math.random() * 30 - 15}deg`
+      );
+      flower.style.animationDelay = `${delay}ms`;
 
-        flower.classList.add("is-small");
+      const head = document.createElement("div");
+      head.className = "head";
 
+      for (let i = 0; i < 5; i++) {
+        const petal = document.createElement("span");
+        petal.className = "petal";
+        petal.style.transform =
+          `rotate(${i * 72}deg) translateY(-65%)`;
+        head.appendChild(petal);
       }
 
-      const total = Math.max(options.total || 1, 1);
-
-      const spread = options.spread || 160;
-
-      const position = total === 1
-
-        ? 0
-
-        : (index / (total - 1)) * 2 - 1;
-
-      const x = position * spread / 2 + (Math.random() - .5) * 15;
-
-      const height =
-
-        (options.minHeight || 65) +
-
-        Math.random() * (options.heightRange || 100);
-
-      const angle = (Math.random() - .5) * 35;
-
-      flower.style.left = `calc(50% + ${x}px)`;
-
-      flower.style.setProperty("--angle", `${angle}deg`);
-
-      flower.style.animationDelay = `${Math.random() * .25}s`;
-
-      flower.style.setProperty("--stem", `${height}px`);
+      const center = document.createElement("span");
+      center.className = "center";
+      head.appendChild(center);
 
       const stem = document.createElement("div");
+      stem.className = "stem";
 
-      stem.className = "flower-stem";
+      const leaf1 = document.createElement("div");
+      leaf1.className = "leaf";
 
-      stem.style.setProperty(
+      const leaf2 = document.createElement("div");
+      leaf2.className = "leaf second";
 
-        "--stem-angle",
-
-        `${(Math.random() - .5) * 13}deg`
-
-      );
-
-      const bloom = document.createElement("div");
-
-      bloom.className = "flower-bloom";
-
-      bloom.innerHTML = flowerSVG();
-
-      flower.append(stem, bloom);
-
-      container.appendChild(flower);
-
-      return flower;
-
+      flower.append(head, stem, leaf1, leaf2);
+      flowerLayer.appendChild(flower);
     }
 
-    /* FLORES QUE YA ESTÁN EN EL JARDÍN */
+    // DISTRIBUIR FLORES POR EL JARDÍN
 
-    function seedFlowers(container, amount, options = {}) {
-
+    function addFlowers(amount) {
       for (let i = 0; i < amount; i++) {
+        const x = 3 + Math.random() * 91;
+        const y = 4 + Math.random() * 87;
+        const size = 22 + Math.random() * 25;
 
-        createFlower(container, i, {
-
-          total: amount,
-
-          ...options
-
-        });
-
+        createFlower(x, y, size, i * 55);
       }
-
     }
 
-    /* CAMBIAR LA DEFINICIÓN */
+    // MOSTRAR UNA SOLA FRASE ALEATORIA
 
-    function changeDefinition() {
+    function changePhrase() {
+      let index;
 
-      let nextIndex;
+      if (phrases.length <= 1) {
+        index = 0;
+      } else {
+        do {
+          index = Math.floor(Math.random() * phrases.length);
+        } while (index === lastPhraseIndex);
+      }
 
-      do {
+      lastPhraseIndex = index;
 
-        nextIndex = Math.floor(Math.random() * definitions.length);
+      phraseCard.style.animation = "none";
+      void phraseCard.offsetWidth;
 
-      } while (
+      phraseWord.textContent = phrases[index].word;
+      phraseDefinition.textContent = phrases[index].definition;
 
-        definitions.length > 1 &&
-
-        nextIndex === currentDefinition
-
-      );
-
-      currentDefinition = nextIndex;
-
-      const item = definitions[currentDefinition];
-
-      definitionElement.classList.remove("changing");
-
-      void definitionElement.offsetWidth;
-
-      definitionElement.classList.add("changing");
-
-      $("word").textContent = item.word;
-
-      $("category").textContent = `(${item.category})`;
-
-      $("meaning").textContent = item.meaning;
-
+      phraseCard.style.animation = "appear 0.7s ease both";
     }
 
-    /* PÉTALOS QUE FLOTAN */
+    // CADA TOQUE AGREGA FLORES Y CAMBIA LA FRASE
 
-    function releasePetals() {
+    garden.addEventListener("pointerdown", (event) => {
+      if (garden.classList.contains("hidden")) return;
 
-      for (let i = 0; i < 12; i++) {
+      event.preventDefault();
 
-        const petal = document.createElement("span");
-
-        petal.className = "petal-fall";
-
-        petal.style.left =
-
-          `${35 + Math.random() * (flowers.clientWidth - 70)}px`;
-
-        petal.style.bottom = `${60 + Math.random() * 150}px`;
-
-        petal.style.setProperty(
-
-          "--dx",
-
-          `${(Math.random() - .5) * 180}px`
-
-        );
-
-        petal.style.setProperty(
-
-          "--dy",
-
-          `${-50 - Math.random() * 140}px`
-
-        );
-
-        petal.style.animationDelay = `${Math.random() * .5}s`;
-
-        flowers.appendChild(petal);
-
-        petal.addEventListener("animationend", () => {
-
-          petal.remove();
-
-        }, { once: true });
-
-      }
-
-    }
-
-    /* ABRIR LA PANTALLA INICIAL */
-
-    function enterGarden() {
-
-      if (isOpening) return;
-
-      isOpening = true;
-
-      splashScreen.classList.add("opening");
-
-      splashEnvelopeButton.disabled = true;
-
-      window.setTimeout(() => {
-
-        mainScreen.classList.add("visible");
-
-        window.setTimeout(() => {
-
-          splashScreen.classList.add("leaving");
-
-          window.setTimeout(() => {
-
-            splashScreen.style.display = "none";
-
-            isOpening = false;
-
-          }, 850);
-
-        }, 250);
-
-      }, 650);
-
-    }
-
-    /* TOCAR EL SOBRE DEL JARDÍN */
-
-    function openEnvelope() {
-
-      if (!gardenOpened) {
-
-        gardenOpened = true;
-
-        garden.classList.add("opened");
-
-      }
-
-      flowerCount++;
-
-      changeDefinition();
-
-      releasePetals();
-
-      const newFlowers = Math.min(
-
-        3 + Math.floor(flowerCount / 2),
-
-        7
-
-      );
-
-      for (let i = 0; i < newFlowers; i++) {
-
-        createFlower(flowers, i, {
-
-          total: newFlowers,
-
-          spread: Math.min(230 + flowerCount * 7, 320),
-
-          minHeight: 75,
-
-          heightRange: 115
-
-        });
-
-      }
-
-      /* Mantener el jardín ligero */
-
-      const allFlowers = flowers.querySelectorAll(".flower");
-
-      while (allFlowers.length > 0 &&
-
-             flowers.querySelectorAll(".flower").length > 65) {
-
-        flowers.querySelector(".flower").remove();
-
-      }
-
-      /* Vibración suave en dispositivos compatibles */
-
-      if ("vibrate" in navigator) {
-
-        navigator.vibrate(25);
-
-      }
-
-    }
-
-    /* EVENTOS */
-
-    splashEnvelopeButton.addEventListener("click", enterGarden);
-
-    envelopeButton.addEventListener("click", openEnvelope);
-
-    $("instruction").addEventListener("click", openEnvelope);
-
-    /* El jardín empieza con el sobre cerrado y sin flores visibles. */
-
+      addFlowers(3 + Math.floor(Math.random() * 3));
+      changePhrase();
+    });
   </script>
 
 </body>
-
 </html>
