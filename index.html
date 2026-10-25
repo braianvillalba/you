@@ -1,1596 +1,2231 @@
 
+
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#121016">
-  <title>El arte de encontrarte 💜</title>
+
+  <meta name="theme-color" content="#080b14">
+
+  <meta name="description" content="Un pequeño jardín de flores celestes hecho especialmente para ti.">
+
+  <title>Un pequeño jardín para ti</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
+
     :root {
-      --purple: #a78bfa;
-      --purple-dark: #c4b5fd;
-      --purple-light: #302344;
-      --pink: #4a2857;
-      --background: #121016;
-      --text: #eee8f7;
-      --muted: #b0a5bd;
-      --shadow: 0 12px 35px rgba(0, 0, 0, .28);
+
+      --background: #080b14;
+
+      --blue: #86aaff;
+
+      --blue-light: #c3e1ff;
+
+      --blue-dark: #385aab;
+
+      --text: #f0eff8;
+
+      --muted: #9da6c0;
+
     }
 
     * {
-      box-sizing: border-box;
+
       margin: 0;
+
       padding: 0;
+
+      box-sizing: border-box;
+
     }
 
     html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 90px;
+
+      min-height: 100%;
+
+      background: var(--background);
+
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      background: var(--background);
+
+      min-height: 100vh;
+
+      min-height: 100dvh;
+
+      overflow-x: hidden;
+
       color: var(--text);
-      line-height: 1.7;
+
+      font-family: 'DM Sans', sans-serif;
+
+      background:
+
+        radial-gradient(ellipse at 50% 45%,
+
+          #141a2b 0%, #0b0e18 48%, #070910 100%);
+
     }
 
-    body.modal-open {
-      overflow: hidden;
+    button {
+
+      font: inherit;
+
     }
 
-    a { color: inherit; }
-    button { font: inherit; }
+    button:focus-visible {
 
-    button:focus-visible,
-    a:focus-visible {
-      outline: 3px solid #c084fc;
-      outline-offset: 4px;
+      outline: 2px solid var(--blue-light);
+
+      outline-offset: 6px;
+
     }
 
-    section {
-      padding: 85px 22px;
-      scroll-margin-top: 75px;
-    }
+    /* =========================
 
-    .container {
-      width: min(1100px, 100%);
-      margin-inline: auto;
-    }
+       PANTALLA INICIAL
 
-    .section-heading {
-      text-align: center;
-      margin-bottom: 35px;
-    }
+    ========================= */
 
-    .eyebrow {
-      color: var(--purple);
-      font-size: .8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
+    .splash-screen {
 
-    h1, h2, h3 {
-      line-height: 1.2;
-      letter-spacing: -.5px;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin-bottom: 15px;
-    }
-
-    .section-description {
-      color: var(--muted);
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    /* NAVBAR */
-
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(18, 16, 22, .96);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid #352744;
-    }
-
-    .nav-inner {
-      width: min(1150px, 100%);
-      min-height: 70px;
-      padding: 12px 22px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .logo {
-      text-decoration: none;
-      color: var(--purple-dark);
-      font-weight: 900;
-      font-size: 1.1rem;
-      white-space: nowrap;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--muted);
-      padding: 9px 12px;
-      border-radius: 12px;
-      font-size: .88rem;
-      font-weight: 700;
-      transition: .2s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      background: var(--purple-light);
-      color: #e9d5ff;
-    }
-
-    .menu-toggle {
-      display: none;
-      border: 0;
-      background: var(--purple-light);
-      color: var(--purple-dark);
-      border-radius: 12px;
-      padding: 8px 12px;
-      cursor: pointer;
-      font-size: 1.2rem;
-    }
-
-    /* BOTONES */
-
-    .btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid transparent;
-      border-radius: 13px;
-      padding: 12px 19px;
-      background: var(--purple);
-      color: #171020;
-      text-decoration: none;
-      font-weight: 800;
-      cursor: pointer;
-      transition: .2s;
-    }
-
-    .btn:hover {
-      background: #c4b5fd;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px #7c3aed33;
-    }
-
-    .btn-secondary {
-      background: #211a2b;
-      color: #e9d5ff;
-      border-color: #49365f;
-    }
-
-    .btn-secondary:hover {
-      background: #302344;
-      color: white;
-    }
-
-    /* INICIO */
-
-    .hero {
-      min-height: 78vh;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      background: #121016;
-      padding-block: 85px;
-    }
-
-    .hero-content { max-width: 850px; }
-
-    .hero-symbol {
-      font-size: 3.2rem;
-      display: inline-block;
-      margin-bottom: 20px;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.7rem, 8vw, 5.6rem);
-      color: #e9d5ff;
-      margin-bottom: 24px;
-    }
-
-    .hero h1 span { color: var(--purple); }
-
-    .hero p {
-      max-width: 650px;
-      margin: 0 auto 28px;
-      color: var(--muted);
-      font-size: 1.1rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .scroll-hint {
-      margin-top: 42px;
-      color: var(--purple);
-      font-size: .9rem;
-    }
-
-    /* CARRUSELES */
-
-    .carousel {
-      position: relative;
-      width: 100%;
-    }
-
-    .carousel-track {
-      display: flex;
-      gap: 18px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding: 8px 3px 22px;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      overscroll-behavior-x: contain;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: #6d4b91 transparent;
-      cursor: grab;
-    }
-
-    .carousel-track:active { cursor: grabbing; }
-
-    .carousel-track.dragging {
-      scroll-snap-type: none;
-      scroll-behavior: auto;
-      user-select: none;
-    }
-
-    .carousel-track > * {
-      flex: 0 0 auto;
-      scroll-snap-align: start;
-    }
-
-    .carousel-controls {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 8px;
-    }
-
-    .round-btn {
-      display: grid;
-      place-items: center;
-      width: 44px;
-      height: 44px;
-      border: 1px solid #49365f;
-      border-radius: 50%;
-      background: #211a2b;
-      color: #e9d5ff;
-      cursor: pointer;
-      font-size: 1.2rem;
-      transition: .2s;
-    }
-
-    .round-btn:hover {
-      background: var(--purple);
-      color: #171020;
-    }
-
-    .round-btn:disabled {
-      opacity: .35;
-      cursor: not-allowed;
-    }
-
-    .carousel-hint {
-      text-align: center;
-      color: var(--muted);
-      font-size: .85rem;
-      margin-top: 10px;
-    }
-
-    /* HISTORIA */
-
-    .history-card {
-      width: min(390px, 83vw);
-      min-height: 300px;
-      background: #1c1823;
-      border: 1px solid #352744;
-      border-radius: 22px;
-      padding: 25px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      white-space: normal;
-    }
-
-    .history-card .date {
-      color: var(--purple);
-      font-size: .82rem;
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
-
-    .history-card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 12px;
-      color: #f0e7ff;
-    }
-
-    .history-card p {
-      color: var(--muted);
-      font-size: .94rem;
-      margin-bottom: 18px;
-    }
-
-    .source-link {
-      display: inline-block;
-      width: fit-content;
-      border: 0;
-      padding: 0;
-      background: transparent;
-      color: var(--purple);
-      font-weight: 800;
-      text-align: left;
-      cursor: pointer;
-      margin-top: auto;
-    }
-
-    .source-link:hover { color: #e9d5ff; }
-
-    /* MODAL */
-
-    .source-modal {
       position: fixed;
+
       inset: 0;
-      z-index: 2000;
+
+      z-index: 20;
+
       display: flex;
+
+      flex-direction: column;
+
       align-items: center;
+
       justify-content: center;
-      padding: 22px;
-      background: rgba(5, 3, 9, .78);
-      backdrop-filter: blur(8px);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity .25s ease, visibility .25s ease;
-    }
 
-    .source-modal.open {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
+      gap: 35px;
 
-    .source-modal-content {
-      width: min(440px, 100%);
-      padding: 35px 28px;
-      background: #211a2b;
-      border: 1px solid #63458a;
-      border-radius: 25px;
-      box-shadow: 0 25px 80px #0009;
-      text-align: center;
-      transform: translateY(14px) scale(.97);
-      transition: transform .25s ease;
-    }
+      padding: 24px;
 
-    .source-modal.open .source-modal-content {
-      transform: translateY(0) scale(1);
-    }
-
-    .source-modal-symbol {
-      display: block;
-      color: var(--purple);
-      font-size: 2.8rem;
-      margin-bottom: 18px;
-    }
-
-    .source-modal-content h3 {
-      color: #f0e7ff;
-      font-size: clamp(1.4rem, 5vw, 1.8rem);
-      line-height: 1.45;
-      margin-bottom: 25px;
-    }
-
-    .source-modal-close {
-      border: 0;
-      border-radius: 13px;
-      padding: 12px 19px;
-      background: var(--purple);
-      color: #171020;
-      font-weight: 800;
-      cursor: pointer;
-      transition: background .2s, transform .2s;
-    }
-
-    .source-modal-close:hover {
-      background: #c4b5fd;
-      transform: translateY(-2px);
-    }
-
-    /* REVELACIÓN */
-
-    .reveal-section {
-      background: #21172d;
-      color: white;
-      text-align: center;
-      border-top: 1px solid #352744;
-      border-bottom: 1px solid #352744;
-    }
-
-    .reveal-content {
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .reveal-section .eyebrow { color: #d8b4fe; }
-
-    .reveal-section p {
-      color: #d2c6df;
-      margin: 20px auto;
-      font-size: 1.08rem;
-    }
-
-    .reveal-line {
-      display: block;
-      font-size: clamp(1.8rem, 5vw, 3.3rem);
-      font-weight: 900;
-      line-height: 1.25;
-      margin: 35px 0 20px;
-    }
-
-    .reveal-line span { color: #d8b4fe; }
-
-    /* TESTIMONIOS */
-
-    .testimonials-section {
-      background: #17131d;
-    }
-
-    .testimonial-card {
-      width: min(680px, 83vw);
-      min-height: 310px;
-      background: #211a2b;
-      padding: clamp(25px, 6vw, 50px);
-      border: 1px solid #3b2b4d;
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      white-space: normal;
-    }
-
-    .testimonial-symbol {
-      font-size: 2.8rem;
-      margin-bottom: 18px;
-    }
-
-    .testimonial-card h3 {
-      color: #e9d5ff;
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      margin-bottom: 15px;
-    }
-
-    .testimonial-card p {
-      color: #c0b4cd;
-      font-size: 1.05rem;
-      margin: 0 auto 20px;
-      max-width: 560px;
-    }
-
-    .testimonial-signature {
-      color: var(--purple);
-      font-weight: 800;
-    }
-
-    /* RECOMENDACIONES */
-
-    .recommendation-card {
-      width: 230px;
       overflow: hidden;
-      background: #1c1823;
-      border: 1px solid #352744;
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      white-space: normal;
-      transition: transform .2s, box-shadow .2s;
+
+      background:
+
+        radial-gradient(ellipse at 50% 48%,
+
+          #17213a 0%, #0b0e18 50%, #070910 100%);
+
+      transition:
+
+        opacity .8s ease,
+
+        visibility .8s ease;
+
     }
 
-    .recommendation-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 38px #00000050;
-    }
+    .splash-screen::before {
 
-    .poster {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 2 / 3;
-      overflow: hidden;
-      background: #282033;
-    }
+      content: "";
 
-    .poster img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform .35s;
-    }
+      position: absolute;
 
-    .recommendation-card:hover .poster img {
-      transform: scale(1.04);
-    }
+      width: 330px;
 
-    /* Espacio reservado para la imagen */
+      height: 330px;
 
-    .poster-placeholder {
-      width: 100%;
-      height: 100%;
-      background: #282033;
-    }
-
-    .recommendation-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 18px;
-    }
-
-    .recommendation-type {
-      color: var(--purple);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 900;
-      font-size: .7rem;
-      margin-bottom: 8px;
-    }
-
-    .recommendation-card h3 {
-      font-size: 1.12rem;
-      margin-bottom: 10px;
-      color: #f0e7ff;
-    }
-
-    .recommendation-card p {
-      color: var(--muted);
-      font-size: .88rem;
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
-
-    .recommendation-card .btn {
-      width: 100%;
-      padding: 10px;
-      font-size: .85rem;
-      margin-top: auto;
-    }
-
-    /* CIERRE */
-
-    .closing {
-      padding: 70px 22px;
-      text-align: center;
-      background: #1c1823;
-      border-top: 1px solid #352744;
-    }
-
-    .closing h2 { color: #e9d5ff; }
-
-    .closing p {
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 25px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 28px 20px;
-      background: #0c0a10;
-      color: #c4b5fd;
-      font-size: .9rem;
-      border-top: 1px solid #302344;
-    }
-
-    .back-to-top {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 900;
-      width: 48px;
-      height: 48px;
-      border: 0;
       border-radius: 50%;
-      background: var(--purple);
-      color: #171020;
-      font-size: 1.3rem;
-      box-shadow: 0 5px 18px #00000050;
+
+      background: rgba(91, 131, 231, .09);
+
+      filter: blur(65px);
+
+      pointer-events: none;
+
+    }
+
+    .splash-content {
+
+      position: relative;
+
+      z-index: 1;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      text-align: center;
+
+      gap: 18px;
+
+      animation: fade-in 1s ease both;
+
+    }
+
+    .splash-eyebrow {
+
+      color: #91a8e5;
+
+      font-size: 10px;
+
+      letter-spacing: 4px;
+
+      text-transform: uppercase;
+
+    }
+
+    .splash-title {
+
+      max-width: 340px;
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(34px, 8vw, 48px);
+
+      font-weight: 400;
+
+      line-height: 1.1;
+
+    }
+
+    .splash-subtitle {
+
+      color: #aab2ca;
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 19px;
+
+      font-style: italic;
+
+    }
+
+    .splash-envelope-button {
+
+      position: relative;
+
+      z-index: 1;
+
+      width: min(310px, 82vw);
+
+      aspect-ratio: 1.48;
+
+      border: 0;
+
+      padding: 0;
+
+      background: transparent;
+
       cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+
+      filter: drop-shadow(0 18px 28px rgba(0,0,0,.35));
+
+      animation: envelope-float 3s ease-in-out infinite;
+
+    }
+
+    .splash-envelope {
+
+      position: absolute;
+
+      inset: 0;
+
+      perspective: 800px;
+
+    }
+
+    .splash-envelope-back {
+
+      position: absolute;
+
+      inset: 0;
+
+      border: 1px solid rgba(255,255,255,.4);
+
+      border-radius: 4px;
+
+      background: linear-gradient(145deg, #e9dcd1, #cdb9ab);
+
+    }
+
+    .splash-letter {
+
+      position: absolute;
+
+      z-index: 1;
+
+      bottom: 5px;
+
+      left: 7%;
+
+      width: 86%;
+
+      height: 84%;
+
+      border-radius: 3px;
+
+      background: linear-gradient(150deg, #f8f1e9, #ded0c4);
+
+      transition: transform .8s cubic-bezier(.2,.8,.2,1);
+
+    }
+
+    .splash-letter::before {
+
+      content: "para ti";
+
+      position: absolute;
+
+      inset: 25px 0 auto;
+
+      color: #536ba7;
+
+      text-align: center;
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 27px;
+
+      font-style: italic;
+
+    }
+
+    .splash-envelope-front {
+
+      position: absolute;
+
+      z-index: 3;
+
+      inset: 0;
+
+      overflow: hidden;
+
+      border-radius: 4px;
+
+      background: linear-gradient(145deg, #eee3d9, #d7c7ba);
+
+      clip-path: polygon(0 0, 50% 53%, 100% 0, 100% 100%, 0 100%);
+
+    }
+
+    .splash-envelope-front::before,
+
+    .splash-envelope-front::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+    }
+
+    .splash-envelope-front::before {
+
+      background: linear-gradient(35deg, #c8b6a9, transparent 65%);
+
+      clip-path: polygon(0 0, 50% 53%, 0 100%);
+
+    }
+
+    .splash-envelope-front::after {
+
+      background: linear-gradient(-35deg, #e6d8cc, transparent 65%);
+
+      clip-path: polygon(100% 0, 50% 53%, 100% 100%);
+
+    }
+
+    .splash-envelope-flap {
+
+      position: absolute;
+
+      z-index: 4;
+
+      inset: 0 0 auto;
+
+      height: 60%;
+
+      background: linear-gradient(145deg, #f2e7dd, #d5c2b5);
+
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+      transform-origin: top center;
+
+      transition: transform .65s ease;
+
+    }
+
+    .splash-seal {
+
+      position: absolute;
+
+      z-index: 5;
+
+      top: 48%;
+
+      left: 50%;
+
+      display: grid;
+
+      place-items: center;
+
+      width: 45px;
+
+      height: 45px;
+
+      transform: translate(-50%, -50%);
+
+      border: 2px solid #91a9f5;
+
+      border-radius: 50%;
+
+      color: #e2e9ff;
+
+      font-size: 23px;
+
+      background: radial-gradient(circle at 35% 25%, #6987df, #263f85 80%);
+
+      box-shadow: 0 3px 8px rgba(20,31,77,.35);
+
+      transition: opacity .3s ease;
+
+    }
+
+    .splash-screen.opening .splash-envelope-flap {
+
+      transform: rotateX(180deg);
+
+    }
+
+    .splash-screen.opening .splash-letter {
+
+      transform: translateY(-45px);
+
+    }
+
+    .splash-screen.opening .splash-seal {
+
       opacity: 0;
+
+    }
+
+    .splash-screen.leaving {
+
+      opacity: 0;
+
       visibility: hidden;
-      transform: translateY(10px);
-      transition: .2s;
+
+      pointer-events: none;
+
     }
 
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+    .splash-hint {
+
+      position: relative;
+
+      z-index: 1;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 13px;
+
+      color: #aab7e4;
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 18px;
+
+      animation: fade-in 1.4s ease both;
+
     }
 
-    @media (max-width: 800px) {
-      .nav-links { gap: 2px; }
+    .splash-hint span:first-child,
 
-      .nav-links a {
-        padding: 9px;
-        font-size: .82rem;
+    .splash-hint span:last-child {
+
+      width: 34px;
+
+      height: 1px;
+
+      background: #8298d7;
+
+    }
+
+    .splash-footer {
+
+      position: absolute;
+
+      bottom: 22px;
+
+      color: #66708c;
+
+      font-size: 9px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+    }
+
+    /* =========================
+
+       JARDÍN PRINCIPAL
+
+    ========================= */
+
+    .main-screen {
+
+      display: none;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      min-height: 100vh;
+
+      min-height: 100dvh;
+
+      padding: 50px 20px 24px;
+
+      opacity: 0;
+
+      transition: opacity .8s ease;
+
+    }
+
+    .main-screen.visible {
+
+      display: flex;
+
+      animation: screen-appear .9s ease forwards;
+
+    }
+
+    .definition {
+
+      position: relative;
+
+      z-index: 5;
+
+      width: 100%;
+
+      max-width: 590px;
+
+      min-height: 180px;
+
+      padding-top: 8px;
+
+      text-align: center;
+
+    }
+
+    .word-line {
+
+      display: flex;
+
+      align-items: baseline;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 12px;
+
+      margin-bottom: 20px;
+
+    }
+
+    .word {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(43px, 6vw, 66px);
+
+      font-weight: 400;
+
+      line-height: 1;
+
+      letter-spacing: -1.8px;
+
+    }
+
+    .category {
+
+      color: var(--blue);
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 24px;
+
+      font-style: italic;
+
+    }
+
+    .meaning {
+
+      max-width: 530px;
+
+      margin: auto;
+
+      color: #e1e3f0;
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(21px, 2.5vw, 29px);
+
+      font-weight: 400;
+
+      line-height: 1.3;
+
+    }
+
+    .ornament {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 12px;
+
+      margin-top: 23px;
+
+      color: var(--blue);
+
+      font-size: 16px;
+
+    }
+
+    .ornament span {
+
+      width: 48px;
+
+      height: 1px;
+
+      background: var(--blue);
+
+    }
+
+    .definition.changing {
+
+      animation: fade-in .5s ease both;
+
+    }
+
+    /* ESCENA DEL SOBRE */
+
+    .garden {
+
+      position: relative;
+
+      isolation: isolate;
+
+      width: min(440px, 100%);
+
+      height: clamp(285px, 43vh, 370px);
+
+      flex-shrink: 0;
+
+      display: flex;
+
+      align-items: flex-end;
+
+      justify-content: center;
+
+      margin-top: 5px;
+
+    }
+
+    .ground {
+
+      position: absolute;
+
+      z-index: -1;
+
+      bottom: 0;
+
+      left: -20%;
+
+      width: 140%;
+
+      height: 45px;
+
+      border-radius: 50%;
+
+      background: radial-gradient(ellipse, rgba(101,126,199,.18), transparent 70%);
+
+      filter: blur(9px);
+
+    }
+
+    /* Flores que nacen dentro del sobre */
+
+    .flowers {
+
+      position: absolute;
+
+      z-index: 2;
+
+      left: 50%;
+
+      bottom: 105px;
+
+      width: 100%;
+
+      height: 245px;
+
+      transform: translateX(-50%);
+
+      pointer-events: none;
+
+    }
+
+    .flower {
+
+      --size: 48px;
+
+      --angle: 0deg;
+
+      position: absolute;
+
+      bottom: 0;
+
+      width: var(--size);
+
+      height: var(--size);
+
+      transform: translateX(-50%) rotate(var(--angle)) scale(.05);
+
+      transform-origin: center bottom;
+
+      opacity: 0;
+
+      animation: bloom .85s cubic-bezier(.2,.8,.2,1) forwards;
+
+      filter: drop-shadow(0 0 7px rgba(104,151,255,.17));
+
+    }
+
+    .flower.is-small {
+
+      --size: 30px;
+
+    }
+
+    .flower svg {
+
+      display: block;
+
+      width: 100%;
+
+      height: 100%;
+
+      overflow: visible;
+
+    }
+
+    .flower-stem {
+
+      position: absolute;
+
+      z-index: -1;
+
+      left: 50%;
+
+      bottom: -1px;
+
+      width: 2px;
+
+      height: var(--stem, 105px);
+
+      border-radius: 100%;
+
+      background: linear-gradient(to top, #465d55, #8eb49c);
+
+      transform: translateX(-50%) rotate(var(--stem-angle, 0deg));
+
+      transform-origin: bottom;
+
+    }
+
+    .flower-stem::after {
+
+      content: "";
+
+      position: absolute;
+
+      top: 48%;
+
+      left: 0;
+
+      width: 17px;
+
+      height: 8px;
+
+      border-radius: 100% 0 100% 0;
+
+      background: #6e9b7d;
+
+      transform: rotate(-35deg);
+
+    }
+
+    .flower-bloom {
+
+      position: absolute;
+
+      left: 50%;
+
+      bottom: calc(var(--stem, 105px) - 8px);
+
+      width: var(--size);
+
+      height: var(--size);
+
+      transform: translateX(-50%);
+
+    }
+
+    /* SOBRE */
+
+    .envelope-button {
+
+      position: absolute;
+
+      z-index: 3;
+
+      bottom: 0;
+
+      left: 50%;
+
+      width: min(330px, 88%);
+
+      height: clamp(165px, 24vh, 205px);
+
+      padding: 0;
+
+      border: none;
+
+      background: transparent;
+
+      transform: translateX(-50%);
+
+      perspective: 900px;
+
+      cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+
+    }
+
+    .envelope {
+
+      position: absolute;
+
+      inset: 0;
+
+      filter: drop-shadow(0 14px 24px rgba(0,0,0,.34));
+
+      transition: transform .35s ease;
+
+    }
+
+    .envelope-button:hover .envelope {
+
+      transform: translateY(-3px);
+
+    }
+
+    .envelope-back {
+
+      position: absolute;
+
+      inset: 0;
+
+      border: 1px solid rgba(255,255,255,.45);
+
+      border-radius: 4px;
+
+      background: #d9c9bc;
+
+    }
+
+    .letter {
+
+      position: absolute;
+
+      z-index: 1;
+
+      bottom: 5px;
+
+      left: 6%;
+
+      width: 88%;
+
+      height: 83%;
+
+      border-radius: 3px;
+
+      background: linear-gradient(150deg, #f4eee8, #dcd0c5);
+
+      transition: transform .75s cubic-bezier(.2,.8,.2,1);
+
+    }
+
+    .letter::before {
+
+      content: "para ti";
+
+      position: absolute;
+
+      top: 25px;
+
+      left: 0;
+
+      width: 100%;
+
+      color: #4c6090;
+
+      text-align: center;
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 23px;
+
+      font-style: italic;
+
+    }
+
+    .envelope-front {
+
+      position: absolute;
+
+      z-index: 3;
+
+      inset: 0;
+
+      overflow: hidden;
+
+      border-radius: 4px;
+
+      background: linear-gradient(145deg, #eee3d9, #d7c7ba);
+
+      clip-path: polygon(0 0, 50% 53%, 100% 0, 100% 100%, 0 100%);
+
+    }
+
+    .envelope-front::before,
+
+    .envelope-front::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+    }
+
+    .envelope-front::before {
+
+      background: linear-gradient(35deg, #c8b6a9, transparent 55%);
+
+      clip-path: polygon(0 0, 50% 53%, 0 100%);
+
+    }
+
+    .envelope-front::after {
+
+      background: linear-gradient(-35deg, #e6d8cc, transparent 55%);
+
+      clip-path: polygon(100% 0, 50% 53%, 100% 100%);
+
+    }
+
+    .envelope-flap {
+
+      position: absolute;
+
+      z-index: 5;
+
+      top: 0;
+
+      left: 0;
+
+      width: 100%;
+
+      height: 60%;
+
+      transform-origin: top center;
+
+      transition: transform .65s ease;
+
+      background: linear-gradient(145deg, #f2e7dd, #d5c2b5);
+
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+    }
+
+    .seal {
+
+      position: absolute;
+
+      z-index: 6;
+
+      top: 48%;
+
+      left: 50%;
+
+      display: grid;
+
+      place-items: center;
+
+      width: 43px;
+
+      height: 43px;
+
+      transform: translate(-50%, -50%);
+
+      border: 2px solid #91a9f5;
+
+      border-radius: 50%;
+
+      color: #e2e9ff;
+
+      font-size: 22px;
+
+      background: radial-gradient(circle at 35% 25%, #6987df, #263f85 80%);
+
+      box-shadow: 0 3px 8px rgba(20,31,77,.35);
+
+      transition: opacity .3s ease;
+
+    }
+
+    .garden.opened .envelope-flap {
+
+      z-index: 0;
+
+      transform: rotateX(180deg);
+
+    }
+
+    .garden.opened .letter {
+
+      transform: translateY(-45px);
+
+    }
+
+    .garden.opened .seal {
+
+      opacity: 0;
+
+    }
+
+    /* PÉTALOS */
+
+    .petal-fall {
+
+      position: absolute;
+
+      z-index: 4;
+
+      width: 13px;
+
+      height: 8px;
+
+      border-radius: 100% 0 100% 0;
+
+      background: linear-gradient(135deg, #c1dfff, #608fff);
+
+      pointer-events: none;
+
+      animation: drift 3s ease-out forwards;
+
+    }
+
+    /* INDICACIÓN */
+
+    .instruction {
+
+      position: relative;
+
+      z-index: 6;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 13px;
+
+      margin-top: 12px;
+
+      padding: 12px 0;
+
+      border: 0;
+
+      background: transparent;
+
+      color: #aab7e4;
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 18px;
+
+      cursor: pointer;
+
+      transition: color .25s ease;
+
+    }
+
+    .instruction:hover {
+
+      color: #fff;
+
+    }
+
+    .instruction .line {
+
+      width: 38px;
+
+      height: 1px;
+
+      background: #8298d7;
+
+    }
+
+    .instruction .hand {
+
+      display: inline-block;
+
+      font-family: sans-serif;
+
+      font-size: 22px;
+
+      animation: tap 1.7s ease-in-out infinite;
+
+    }
+
+    .small-note {
+
+      margin-top: 8px;
+
+      color: #66708c;
+
+      font-size: 9px;
+
+      letter-spacing: 3px;
+
+      text-align: center;
+
+      text-transform: uppercase;
+
+    }
+
+    /* ANIMACIONES */
+
+    @keyframes fade-in {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(9px);
+
       }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
+
+    }
+
+    @keyframes screen-appear {
+
+      from { opacity: 0; }
+
+      to { opacity: 1; }
+
+    }
+
+    @keyframes envelope-float {
+
+      0%, 100% { transform: translateY(0); }
+
+      50% { transform: translateY(-7px); }
+
+    }
+
+    @keyframes bloom {
+
+      0% {
+
+        opacity: 0;
+
+        transform: translateX(-50%) rotate(var(--angle)) scale(.05);
+
+      }
+
+      65% {
+
+        opacity: 1;
+
+        transform: translateX(-50%) rotate(var(--angle)) scale(1.08);
+
+      }
+
+      100% {
+
+        opacity: 1;
+
+        transform: translateX(-50%) rotate(var(--angle)) scale(1);
+
+      }
+
+    }
+
+    @keyframes drift {
+
+      0% {
+
+        opacity: .9;
+
+        transform: translate(0,0) rotate(0deg);
+
+      }
+
+      100% {
+
+        opacity: 0;
+
+        transform: translate(var(--dx),var(--dy)) rotate(280deg);
+
+      }
+
+    }
+
+    @keyframes tap {
+
+      0%, 100% { transform: translateY(0); }
+
+      50% { transform: translateY(-5px); }
+
+    }
+
+    /* =========================
+
+       RESPONSIVE
+
+    ========================= */
+
+    @media (min-width: 900px) {
+
+      .main-screen {
+
+        padding-top: 55px;
+
+      }
+
+      .garden {
+
+        width: 460px;
+
+        height: 350px;
+
+      }
+
     }
 
     @media (max-width: 600px) {
-      section { padding: 70px 18px; }
 
-      .nav-inner { min-height: 65px; }
+      .main-screen {
 
-      .menu-toggle { display: block; }
+        padding: max(30px, env(safe-area-inset-top)) 17px
 
-      .nav-links {
-        position: absolute;
-        top: calc(100% + 1px);
-        left: 0;
-        right: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 5px;
-        padding: 0 20px;
-        background: rgba(18, 16, 22, .99);
-        border-bottom: 1px solid #352744;
-        box-shadow: var(--shadow);
-        max-height: 0;
-        overflow: hidden;
-        visibility: hidden;
-        transition: max-height .25s ease, padding .25s ease;
+                 max(22px, env(safe-area-inset-bottom));
+
+        min-height: 100svh;
+
+        min-height: 100dvh;
+
       }
 
-      .nav-links.open {
-        max-height: 300px;
-        padding: 15px 20px 20px;
-        visibility: visible;
+      .definition {
+
+        min-height: 175px;
+
+        padding-top: 10px;
+
       }
 
-      .nav-links a {
-        padding: 12px 14px;
-        font-size: .95rem;
+      .word {
+
+        font-size: clamp(41px, 11vw, 58px);
+
       }
 
-      .hero { min-height: 75vh; }
-      .carousel-track { gap: 14px; }
-      .history-card { min-height: 330px; }
-      .recommendation-card { width: 205px; }
+      .category {
+
+        font-size: 20px;
+
+      }
+
+      .word-line {
+
+        gap: 8px;
+
+        margin-bottom: 17px;
+
+      }
+
+      .meaning {
+
+        max-width: 360px;
+
+        font-size: clamp(21px, 5.8vw, 26px);
+
+      }
+
+      .ornament {
+
+        margin-top: 19px;
+
+      }
+
+      .garden {
+
+        width: min(390px, 100%);
+
+        height: clamp(260px, 38vh, 330px);
+
+        margin-top: 0;
+
+      }
+
+      .flowers {
+
+        height: 225px;
+
+        bottom: 92px;
+
+      }
+
+      .flower {
+
+        --size: 40px;
+
+      }
+
+      .flower.is-small {
+
+        --size: 25px;
+
+      }
+
+      .envelope-button {
+
+        width: min(310px, 88%);
+
+        height: clamp(155px, 22vh, 190px);
+
+      }
+
+      .instruction {
+
+        margin-top: 6px;
+
+        font-size: 16px;
+
+      }
+
+      .instruction .line {
+
+        width: 28px;
+
+      }
+
+      .small-note {
+
+        font-size: 8px;
+
+        letter-spacing: 2px;
+
+      }
+
+      .splash-content {
+
+        gap: 16px;
+
+      }
+
+      .splash-envelope-button {
+
+        width: min(300px, 82vw);
+
+      }
+
+      .splash-footer {
+
+        bottom: max(18px, env(safe-area-inset-bottom));
+
+      }
+
+    }
+
+    @media (max-height: 700px) and (min-width: 601px) {
+
+      .main-screen {
+
+        padding-top: 25px;
+
+        padding-bottom: 15px;
+
+      }
+
+      .definition {
+
+        min-height: 150px;
+
+      }
+
+      .garden {
+
+        height: 280px;
+
+      }
+
+      .small-note {
+
+        margin-top: 2px;
+
+      }
+
+    }
+
+    @media (max-width: 360px) {
+
+      .main-screen {
+
+        padding-left: 12px;
+
+        padding-right: 12px;
+
+      }
+
+      .word {
+
+        font-size: 39px;
+
+      }
+
+      .category {
+
+        font-size: 18px;
+
+      }
+
+      .garden {
+
+        height: 255px;
+
+      }
+
+      .flowers {
+
+        bottom: 88px;
+
+        height: 210px;
+
+      }
+
+      .envelope-button {
+
+        height: 150px;
+
+      }
+
+      .flower {
+
+        --size: 34px;
+
+      }
+
+      .flower.is-small {
+
+        --size: 23px;
+
+      }
+
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
 
-      *, *::before, *::after {
+      *,
+
+      *::before,
+
+      *::after {
+
         animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
         transition-duration: .01ms !important;
+
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
-  <header class="navbar">
-    <nav class="nav-inner" aria-label="Navegación principal">
-      <a href="#inicio" class="logo">Para vos 💜</a>
+  <!-- PANTALLA INICIAL: SOLO EL SOBRE -->
 
-      <button class="menu-toggle" id="menuToggle" type="button"
-        aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
-        ☰
+  <section class="splash-screen" id="splashScreen">
+
+    <div class="splash-content">
+
+      <p class="splash-eyebrow">Un detalle para ti</p>
+
+      <h1 class="splash-title">
+
+        Hay cosas bonitas<br>
+
+        esperando por ti
+
+      </h1>
+
+      <p class="splash-subtitle">
+
+        He preparado algo especial...
+
+      </p>
+
+    </div>
+
+    <button
+
+      class="splash-envelope-button"
+
+      id="splashEnvelopeButton"
+
+      aria-label="Abrir el sobre para descubrir tu jardín"
+
+    >
+
+      <div class="splash-envelope">
+
+        <div class="splash-envelope-back"></div>
+
+        <div class="splash-letter"></div>
+
+        <div class="splash-envelope-front"></div>
+
+        <div class="splash-envelope-flap"></div>
+
+        <div class="splash-seal">♡</div>
+
+      </div>
+
+    </button>
+
+    <p class="splash-hint">
+
+      <span></span>
+
+      Toca el sobre
+
+      <span></span>
+
+    </p>
+
+    <p class="splash-footer">Hecho con cariño para ti</p>
+
+  </section>
+
+  <!-- JARDÍN PRINCIPAL -->
+
+  <main class="main-screen" id="mainScreen">
+
+    <header class="definition" id="definition" aria-live="polite">
+
+      <div class="word-line">
+
+        <h2 class="word" id="word">Hermoso</h2>
+
+        <span class="category" id="category">(adj.)</span>
+
+      </div>
+
+      <p class="meaning" id="meaning">
+
+        Que causa admiración por su belleza, armonía o perfección.
+
+      </p>
+
+      <div class="ornament" aria-hidden="true">
+
+        <span></span>
+
+        <span style="width:auto;height:auto;background:none">♥</span>
+
+        <span></span>
+
+      </div>
+
+    </header>
+
+    <section class="garden" id="garden" aria-label="Jardín de flores celestes">
+
+      <div class="ground"></div>
+
+      <div class="flowers" id="flowers" aria-hidden="true"></div>
+
+      <button
+
+        class="envelope-button"
+
+        id="envelopeButton"
+
+        aria-label="Tocar el sobre para hacer brotar más flores"
+
+      >
+
+        <div class="envelope">
+
+          <div class="envelope-back"></div>
+
+          <div class="letter"></div>
+
+          <div class="envelope-front"></div>
+
+          <div class="envelope-flap"></div>
+
+          <div class="seal">♡</div>
+
+        </div>
+
       </button>
 
-      <div class="nav-links" id="navLinks">
-        <a href="#historia">Historia del arte</a>
-        <a href="#revelacion">La verdad</a>
-        <a href="#razones">Razones</a>
-        <a href="#para-vos">Para vos</a>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero" id="inicio">
-      <div class="container hero-content">
-        <div class="hero-symbol" aria-hidden="true">✦</div>
-        <p class="eyebrow">Una pequeña investigación</p>
-        <h1>¿Qué es el <span>arte</span> y dónde se encuentra?</h1>
-        <p>
-          Durante siglos, las personas intentaron explicar la belleza.
-          Filósofos, artistas e historiadores buscaron una respuesta.
-          Yo también tengo una teoría.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn" href="#historia">Descubrir la historia</a>
-          <a class="btn btn-secondary" href="#revelacion">Ir al final</a>
-        </div>
-
-        <div class="scroll-hint">
-          Una historia con una conclusión inesperada.
-        </div>
-      </div>
     </section>
 
-    <section id="historia">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Capítulo uno</p>
-          <h2>La historia del arte</h2>
-          <p class="section-description">
-            Deslizá para conocer algunos momentos importantes de la historia
-            de la belleza y del pensamiento artístico.
-          </p>
-        </div>
+    <button class="instruction" id="instruction">
 
-        <div class="carousel" data-carousel>
-          <div class="carousel-track" id="historyTrack" tabindex="0"
-            aria-label="Historia del arte. Deslizá horizontalmente"></div>
-          <div class="carousel-controls">
-            <button class="round-btn" type="button" data-prev
-              aria-label="Anterior en la historia">←</button>
-            <button class="round-btn" type="button" data-next
-              aria-label="Siguiente en la historia">→</button>
-          </div>
-          <p class="carousel-hint">← Deslizá para explorar →</p>
-        </div>
-      </div>
-    </section>
+      <span class="line"></span>
 
-    <section class="reveal-section" id="revelacion">
-      <div class="container reveal-content">
-        <p class="eyebrow">Capítulo dos · Mi conclusión</p>
-        <h2>Pero hay algo que toda esta historia no puede explicar.</h2>
+      <span class="hand" aria-hidden="true">♧</span>
 
-        <p>
-          Las cuevas, los museos, los libros y los filósofos tienen mucho
-          que enseñarnos. No digo que sus descubrimientos sean falsos.
-          Digo que ninguno podía saber dónde iba a encontrar yo algo
-          verdaderamente hermoso.
-        </p>
+      <span>Toca el sobre</span>
 
-        <p>
-          Quizás el arte no sea solamente una pintura, una escultura o una
-          obra famosa. Quizás también sea esa sensación que aparece cuando
-          encontrás algo que no sabías que estabas buscando.
-        </p>
+      <span class="line"></span>
 
-        <span class="reveal-line">
-          Yo encontré el arte en una <span>terminal de Puerto Rico.</span>
-        </span>
+    </button>
 
-        <p>
-          Y desde ese día, la definición de belleza cambió un poquito para mí.
-        </p>
+    <p class="small-note">Un pequeño jardín hecho para ti</p>
 
-        <a class="btn btn-secondary" href="#razones">Te cuento por qué</a>
-      </div>
-    </section>
-
-    <section class="testimonials-section" id="razones">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Capítulo tres</p>
-          <h2>Razones por las que creo que sos lo más hermoso de este mundo</h2>
-          <p class="section-description">
-            Cada tarjeta guarda una de las razones por las que pienso eso.
-          </p>
-        </div>
-
-        <div class="carousel" data-carousel>
-          <div class="carousel-track" id="testimonialsTrack" tabindex="0"
-            aria-label="Razones. Deslizá horizontalmente"></div>
-          <div class="carousel-controls">
-            <button class="round-btn" type="button" data-prev
-              aria-label="Razón anterior">←</button>
-            <button class="round-btn" type="button" data-next
-              aria-label="Razón siguiente">→</button>
-          </div>
-          <p class="carousel-hint">← Deslizá para leer las razones →</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- UN SOLO CARRUSEL PARA NOVELAS, SERIES Y PELÍCULAS -->
-
-    <section id="para-vos">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Un plan para compartir</p>
-          <h2>Nuestro rincón de historias</h2>
-          <p class="section-description">
-            Las novelas que quizás te gusten, las series que me gustan a mí
-            y algunas películas para disfrutar juntos.
-          </p>
-        </div>
-
-        <div class="carousel" data-carousel>
-          <div class="carousel-track" id="recommendationsTrack" tabindex="0"
-            aria-label="Novelas, series y películas. Deslizá horizontalmente"></div>
-
-          <div class="carousel-controls">
-            <button class="round-btn" type="button" data-prev
-              aria-label="Recomendación anterior">←</button>
-            <button class="round-btn" type="button" data-next
-              aria-label="Siguiente recomendación">→</button>
-          </div>
-
-          <p class="carousel-hint">
-            ← Deslizá para descubrir novelas, series y películas →
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="closing">
-      <div class="container">
-        <p class="eyebrow">Y eso era todo</p>
-        <h2>Al final, la belleza no era una teoría.</h2>
-        <p>
-          Era una persona. Y tuve la suerte de encontrarla en un lugar
-          donde nunca habría imaginado encontrar algo así.
-        </p>
-        <a class="btn" href="#inicio">Volver a empezar</a>
-      </div>
-    </section>
   </main>
 
-  <footer>
-    Hecho con cariño, un poquito de historia y mucho violeta. 💜
-  </footer>
-
-  <button class="back-to-top" id="backToTop" type="button"
-    aria-label="Volver arriba" title="Volver arriba">↑</button>
-
-  <!-- MODAL DE FRASES -->
-
-  <div class="source-modal" id="sourceModal" role="dialog"
-    aria-modal="true" aria-labelledby="sourceModalMessage"
-    aria-hidden="true">
-    <div class="source-modal-content">
-      <span class="source-modal-symbol" aria-hidden="true">💜</span>
-      <h3 id="sourceModalMessage">
-        ¿En serio pensás que existe algo más lindo que vos?
-      </h3>
-      <button class="source-modal-close" id="sourceModalClose" type="button">
-        Seguir descubriendo
-      </button>
-    </div>
-  </div>
-
   <script>
-    // ==================================================
-    // CONTENIDO
-    // Para agregar portadas, pegá la URL en image: ""
-    // Las recomendaciones se muestran en un único carrusel.
-    // ==================================================
 
-    const data = {
-      history: [
-        {
-          date: "Hace unos 36.000 años",
-          title: "Las pinturas de Chauvet",
-          text: "En una cueva de Francia se conservan pinturas de animales realizadas hace decenas de miles de años. La cueva fue descubierta en 1994 por Jean-Marie Chauvet, Éliette Brunel y Christian Hillaire.",
-          url: "https://archeologie.culture.gouv.fr/chauvet/en/aurignacian-cave-art"
-        },
-        {
-          date: "Antigua Grecia",
-          title: "Platón y Aristóteles",
-          text: "Los filósofos griegos reflexionaron sobre la belleza, la poesía y la imitación de la realidad. Sus ideas dieron forma a algunas de las primeras discusiones filosóficas sobre el arte.",
-          url: "https://iep.utm.edu/ancient-aesthetics/"
-        },
-        {
-          date: "1735",
-          title: "La estética como disciplina",
-          text: "Alexander Gottlieb Baumgarten utilizó el término estética para desarrollar una reflexión filosófica sobre el conocimiento sensible y la experiencia de lo bello.",
-          url: "https://academic.oup.com/reference/62401/reference-article-abstract/555522785"
-        },
-        {
-          date: "1790",
-          title: "Immanuel Kant",
-          text: "En su Crítica del juicio, Kant estudió cómo juzgamos la belleza y qué sucede cuando algo nos parece bello sin depender simplemente de su utilidad.",
-          url: "https://www.cambridge.org/core/books/abs/cambridge-history-of-philosophy-in-the-nineteenth-century-17901870/beautiful-and-the-good"
-        }
-      ],
+    const definitions = [
 
-      testimonials: [
-        {
-          symbol: "♡",
-          title: "Tu sonrisa",
-          quote: "Tenés esa forma de sonreír que puede cambiar por completo cómo se siente un momento."
-        },
-        {
-          symbol: "✧",
-          title: "Tus ojos",
-          quote: "Hay miradas que dicen más de lo que podrían explicar mil palabras."
-        },
-        {
-          symbol: "🌷",
-          title: "Tu forma de ser",
-          quote: "Lo hermoso de vos no está solamente en lo que se ve, sino también en lo que transmitís."
-        },
-        {
-          symbol: "☁️",
-          title: "Los pequeños detalles",
-          quote: "A veces lo que más me gusta de vos son esas cosas pequeñas que quizás ni siquiera notás."
-        },
-        {
-          symbol: "✨",
-          title: "Tu naturalidad",
-          quote: "No necesitás intentar ser alguien más para tener algo especial."
-        },
-        {
-          symbol: "☀️",
-          title: "Lo que transmitís",
-          quote: "Hay personas que hacen que un momento común se convierta en un recuerdo lindo."
-        },
-        {
-          symbol: "🎨",
-          title: "Tu manera de ver el mundo",
-          quote: "Conocer a alguien también es descubrir nuevas formas de mirar las cosas."
-        },
-        {
-          symbol: "💜",
-          title: "Porque sos vos",
-          quote: "Aunque intentara enumerar cada detalle, siempre sentiría que me falta mencionar algo."
-        }
-      ],
+      {
 
-      novelas: [
-        {
-          type: "Novela turca",
-          title: "Love Is in the Air",
-          description: "Una historia romántica llena de encuentros inesperados, humor y sentimientos.",
-          image: "",
-          search: "Sen Çal Kapımı",
-          mediaType: "tv"
-        },
-        {
-          type: "Novela turca",
-          title: "Hercai",
-          description: "Un romance intenso atravesado por secretos familiares, orgullo y venganza.",
-          image: "",
-          search: "Hercai",
-          mediaType: "tv"
-        },
-        {
-          type: "Novela turca",
-          title: "Tierra amarga",
-          description: "Una historia de amor, decisiones difíciles y secretos en una época de grandes cambios.",
-          image: "",
-          search: "Bir Zamanlar Çukurova",
-          mediaType: "tv"
-        },
-        {
-          type: "Novela turca",
-          title: "Fatmagül",
-          description: "Un drama sobre las consecuencias de la violencia, la búsqueda de justicia y la reconstrucción de la vida.",
-          image: "",
-          search: "Fatmagül'ün Suçu Ne?",
-          mediaType: "tv"
-        },
-        {
-          type: "Novela brasileña",
-          title: "Avenida Brasil",
-          description: "Intrigas, secretos, ambición y una historia de venganza que atrapó a millones.",
-          image: "",
-          search: "Avenida Brasil",
-          mediaType: "tv"
-        },
-        {
-          type: "Novela brasileña",
-          title: "El clon",
-          description: "Un drama romántico sobre la familia, la identidad, la cultura y las decisiones que cambian una vida.",
-          image: "",
-          search: "O Clone",
-          mediaType: "tv"
-        },
-        {
-          type: "Novela brasileña",
-          title: "Totalmente diva",
-          description: "Moda, ambición, rivalidades y romance en una historia de superación personal.",
-          image: "",
-          search: "Totalmente Demais",
-          mediaType: "tv"
-        },
-        {
-          type: "Novela brasileña",
-          title: "Pantanal",
-          description: "Una historia familiar llena de romances, secretos y paisajes naturales impresionantes.",
-          image: "",
-          search: "Pantanal 2022",
-          mediaType: "tv"
-        }
-      ],
+        word: "Hermoso",
 
-      series: [
-        {
-          type: "Serie policial",
-          title: "El mentalista",
-          description: "Patrick Jane usa su capacidad de observación y su ingenio para resolver crímenes.",
-          image: "",
-          search: "The Mentalist",
-          mediaType: "tv"
-        },
-        {
-          type: "Drama legal",
-          title: "La ley de los audaces",
-          description: "Abogados brillantes, estrategias, rivalidades y diálogos ingeniosos en el mundo legal.",
-          image: "",
-          search: "Suits",
-          mediaType: "tv"
-        },
-        {
-          type: "Drama médico",
-          title: "Dr. House",
-          description: "Un médico extraordinario resuelve diagnósticos complejos con lógica, sarcasmo y métodos poco convencionales.",
-          image: "",
-          search: "House M.D.",
-          mediaType: "tv"
-        }
-      ],
+        category: "adj.",
 
-      films: [
-        {
-          type: "Romance",
-          title: "Orgullo y prejuicio",
-          description: "Una historia de primeras impresiones, orgullo y sentimientos que crecen con el tiempo.",
-          image: "",
-          search: "Pride & Prejudice 2005",
-          mediaType: "movie"
-        },
-        {
-          type: "Drama",
-          title: "Mujercitas",
-          description: "Cuatro hermanas, sus sueños y las distintas maneras de crecer y encontrar su lugar.",
-          image: "",
-          search: "Little Women 2019",
-          mediaType: "movie"
-        },
-        {
-          type: "Romance",
-          title: "Yo antes de ti",
-          description: "Un encuentro inesperado que transforma la manera de mirar la vida.",
-          image: "",
-          search: "Me Before You 2016",
-          mediaType: "movie"
-        },
-        {
-          type: "Musical",
-          title: "La La Land",
-          description: "Música, sueños y una historia sobre las decisiones que dejan huella.",
-          image: "",
-          search: "La La Land 2016",
-          mediaType: "movie"
-        },
-        {
-          type: "Aventura",
-          title: "Enola Holmes",
-          description: "Misterio y aventura con una protagonista que decide escribir su propia historia.",
-          image: "",
-          search: "Enola Holmes 2020",
-          mediaType: "movie"
-        }
-      ]
-    };
+        meaning: "Que causa admiración por su belleza, armonía o perfección."
 
-    // ==================================================
-    // UTILIDADES
-    // ==================================================
+      },
 
-    function createElement(tag, className, content) {
-      const element = document.createElement(tag);
+      {
 
-      if (className) element.className = className;
-      if (content !== undefined) element.textContent = content;
+        word: "Bello",
 
-      return element;
-    }
+        category: "adj.",
 
-    function createLink(text, url, className = "") {
-      const link = createElement("a", className, text);
+        meaning: "Que, por la perfección de sus formas, complace a la vista o al espíritu."
 
-      link.href = url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
+      },
 
-      return link;
-    }
+      {
 
-    // ==================================================
-    // MODAL DE FRASES
-    // ==================================================
+        word: "Sublime",
 
-    const secretMessages = [
-      "¿En serio pensás que existe algo más lindo que vos?",
-      "En serio, me ofende que lo pienses.",
-      "Esta gente no entiende de arte, yo sí.",
-      "Tantos siglos buscando la belleza y yo tuve que encontrarla en una terminal de Puerto Rico.",
-      "Platón escribió sobre la belleza. Yo podría escribir páginas enteras sobre vos.",
-      "Los museos están llenos de obras maravillosas, pero ninguna me hizo cambiar la definición de belleza.",
-      "Si la belleza fuera una ciencia, vos serías la prueba que confirma mi teoría.",
-      "Perdón, filósofos, pero creo que encontré una respuesta mejor.",
-      "La historia del arte es interesante, pero conocerte fue mi descubrimiento favorito.",
-      "¿La fuente? Mi fuente es que tengo ojos y sé lo que estoy viendo. 💜"
+        category: "adj.",
+
+        meaning: "Que eleva la emoción y despierta una admiración extraordinaria."
+
+      },
+
+      {
+
+        word: "Precioso",
+
+        category: "adj.",
+
+        meaning: "De gran belleza o valor; digno de ser contemplado y atesorado."
+
+      },
+
+      {
+
+        word: "Encanto",
+
+        category: "s. m.",
+
+        meaning: "Cualidad de aquello que cautiva los sentidos y conquista el corazón."
+
+      },
+
+      {
+
+        word: "Radiante",
+
+        category: "adj.",
+
+        meaning: "Que resplandece de alegría, luz o una belleza imposible de ocultar."
+
+      },
+
+      {
+
+        word: "Exquisito",
+
+        category: "adj.",
+
+        meaning: "De singular y extraordinaria belleza, delicadeza o refinamiento."
+
+      },
+
+      {
+
+        word: "Gracia",
+
+        category: "s. f.",
+
+        meaning: "Cualidad que hace agradable, armonioso y encantador a alguien."
+
+      },
+
+      {
+
+        word: "Magnífico",
+
+        category: "adj.",
+
+        meaning: "Que destaca por su esplendor, excelencia o grandeza."
+
+      },
+
+      {
+
+        word: "Etéreo",
+
+        category: "adj.",
+
+        meaning: "De delicadeza tan sutil que parece pertenecer a otro mundo."
+
+      },
+
+      {
+
+        word: "Fascinante",
+
+        category: "adj.",
+
+        meaning: "Que atrae poderosamente la atención por su singular belleza."
+
+      },
+
+      {
+
+        word: "Idílico",
+
+        category: "adj.",
+
+        meaning: "Que parece perfecto, apacible y hermoso como un sueño."
+
+      },
+
+      {
+
+        word: "Delicado",
+
+        category: "adj.",
+
+        meaning: "Que revela belleza y ternura en sus formas más sutiles."
+
+      },
+
+      {
+
+        word: "Único",
+
+        category: "adj.",
+
+        meaning: "Que no tiene igual y cuya esencia no puede repetirse."
+
+      },
+
+      {
+
+        word: "Maravilla",
+
+        category: "s. f.",
+
+        meaning: "Cosa que causa profunda admiración por su belleza o perfección."
+
+      },
+
+      {
+
+        word: "Florido",
+
+        category: "adj.",
+
+        meaning: "Que está lleno de flores; símbolo de vida, renovación y belleza."
+
+      },
+
+      {
+
+        word: "Resplandor",
+
+        category: "s. m.",
+
+        meaning: "Luz que irradia algo hermoso y atrae todas las miradas."
+
+      },
+
+      {
+
+        word: "Inefable",
+
+        category: "adj.",
+
+        meaning: "Tan extraordinario que las palabras no alcanzan para describirlo."
+
+      },
+
+      {
+
+        word: "Atemporal",
+
+        category: "adj.",
+
+        meaning: "Que conserva su belleza sin depender del paso del tiempo."
+
+      },
+
+      {
+
+        word: "Admirable",
+
+        category: "adj.",
+
+        meaning: "Digno de contemplación, aprecio y profunda admiración."
+
+      }
+
     ];
 
-    const sourceModal = document.getElementById("sourceModal");
-    const sourceModalMessage = document.getElementById("sourceModalMessage");
-    const sourceModalClose = document.getElementById("sourceModalClose");
+    const $ = (id) => document.getElementById(id);
 
-    let secretMessageIndex = 0;
-    let lastFocusedElement = null;
+    const splashScreen = $("splashScreen");
 
-    function openSourceModal() {
-      lastFocusedElement = document.activeElement;
+    const splashEnvelopeButton = $("splashEnvelopeButton");
 
-      sourceModalMessage.textContent =
-        secretMessages[secretMessageIndex % secretMessages.length];
+    const mainScreen = $("mainScreen");
 
-      secretMessageIndex++;
+    const garden = $("garden");
 
-      sourceModal.classList.add("open");
-      sourceModal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("modal-open");
+    const flowers = $("flowers");
 
-      sourceModalClose.focus();
+    const envelopeButton = $("envelopeButton");
+
+    const definitionElement = $("definition");
+
+    let currentDefinition = 0;
+
+    let flowerCount = 0;
+
+    let isOpening = false;
+
+    let gardenOpened = false;
+
+    /* SVG DE LAS FLORES CELESTES */
+
+    function flowerSVG() {
+
+      return `
+
+        <svg viewBox="-30 -30 60 60" aria-hidden="true">
+
+          <defs>
+
+            <linearGradient
+
+              id="petal-${Math.random().toString(36).slice(2)}"
+
+              x1="0" y1="0" x2="1" y2="1"
+
+            >
+
+              <stop offset="0%" stop-color="#c3e1ff"/>
+
+              <stop offset="55%" stop-color="#83b4ff"/>
+
+              <stop offset="100%" stop-color="#5484ed"/>
+
+            </linearGradient>
+
+          </defs>
+
+          <g fill="#83b4ff" stroke="#c7e2ff" stroke-width=".65">
+
+            <ellipse cx="0" cy="-13" rx="7.5" ry="13"/>
+
+            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(45)"/>
+
+            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(90)"/>
+
+            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(135)"/>
+
+            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(180)"/>
+
+            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(225)"/>
+
+            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(270)"/>
+
+            <ellipse cx="0" cy="-13" rx="7.5" ry="13" transform="rotate(315)"/>
+
+          </g>
+
+          <circle r="5" fill="#f4dca5" stroke="#fff0c6" stroke-width="1"/>
+
+          <circle cx="-1.5" cy="-1" r="1" fill="#fff4d2"/>
+
+          <circle cx="1.5" cy="1.2" r=".8" fill="#c69a4d"/>
+
+        </svg>
+
+      `;
+
     }
 
-    function closeSourceModal() {
-      sourceModal.classList.remove("open");
-      sourceModal.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("modal-open");
+    /* CREAR UNA FLOR CON SU TALLO */
 
-      if (lastFocusedElement) lastFocusedElement.focus();
-    }
+    function createFlower(container, index, options = {}) {
 
-    sourceModalClose.addEventListener("click", closeSourceModal);
+      const flower = document.createElement("div");
 
-    sourceModal.addEventListener("click", event => {
-      if (event.target === sourceModal) closeSourceModal();
-    });
+      flower.className = "flower";
 
-    document.addEventListener("keydown", event => {
-      if (
-        event.key === "Escape" &&
-        sourceModal.classList.contains("open")
-      ) {
-        closeSourceModal();
+      if (Math.random() > 0.55) {
+
+        flower.classList.add("is-small");
+
       }
-    });
 
-    // ==================================================
-    // HISTORIA DEL ARTE
-    // ==================================================
+      const total = Math.max(options.total || 1, 1);
 
-    const historyTrack = document.getElementById("historyTrack");
+      const spread = options.spread || 160;
 
-    data.history.forEach(item => {
-      const card = createElement("article", "history-card");
-      const date = createElement("span", "date", item.date);
-      const title = createElement("h3", "", item.title);
-      const paragraph = createElement("p", "", item.text);
+      const position = total === 1
 
-      const button = createElement(
-        "button",
-        "source-link",
-        "Consultar fuente"
+        ? 0
+
+        : (index / (total - 1)) * 2 - 1;
+
+      const x = position * spread / 2 + (Math.random() - .5) * 15;
+
+      const height =
+
+        (options.minHeight || 65) +
+
+        Math.random() * (options.heightRange || 100);
+
+      const angle = (Math.random() - .5) * 35;
+
+      flower.style.left = `calc(50% + ${x}px)`;
+
+      flower.style.setProperty("--angle", `${angle}deg`);
+
+      flower.style.animationDelay = `${Math.random() * .25}s`;
+
+      flower.style.setProperty("--stem", `${height}px`);
+
+      const stem = document.createElement("div");
+
+      stem.className = "flower-stem";
+
+      stem.style.setProperty(
+
+        "--stem-angle",
+
+        `${(Math.random() - .5) * 13}deg`
+
       );
 
-      button.type = "button";
-      button.addEventListener("click", openSourceModal);
+      const bloom = document.createElement("div");
 
-      card.append(date, title, paragraph, button);
-      historyTrack.appendChild(card);
-    });
+      bloom.className = "flower-bloom";
 
-    // ==================================================
-    // TESTIMONIOS
-    // ==================================================
+      bloom.innerHTML = flowerSVG();
 
-    const testimonialsTrack =
-      document.getElementById("testimonialsTrack");
+      flower.append(stem, bloom);
 
-    data.testimonials.forEach(item => {
-      const card = createElement("article", "testimonial-card");
+      container.appendChild(flower);
 
-      const symbol = createElement(
-        "div",
-        "testimonial-symbol",
-        item.symbol
+      return flower;
+
+    }
+
+    /* FLORES QUE YA ESTÁN EN EL JARDÍN */
+
+    function seedFlowers(container, amount, options = {}) {
+
+      for (let i = 0; i < amount; i++) {
+
+        createFlower(container, i, {
+
+          total: amount,
+
+          ...options
+
+        });
+
+      }
+
+    }
+
+    /* CAMBIAR LA DEFINICIÓN */
+
+    function changeDefinition() {
+
+      let nextIndex;
+
+      do {
+
+        nextIndex = Math.floor(Math.random() * definitions.length);
+
+      } while (
+
+        definitions.length > 1 &&
+
+        nextIndex === currentDefinition
+
       );
 
-      symbol.setAttribute("aria-hidden", "true");
+      currentDefinition = nextIndex;
 
-      const title = createElement("h3", "", item.title);
-      const quote = createElement("p", "", item.quote);
+      const item = definitions[currentDefinition];
 
-      const signature = createElement(
-        "div",
-        "testimonial-signature",
-        "— Una de mis razones"
-      );
+      definitionElement.classList.remove("changing");
 
-      card.append(symbol, title, quote, signature);
-      testimonialsTrack.appendChild(card);
-    });
+      void definitionElement.offsetWidth;
 
-    // ==================================================
-    // RECOMENDACIONES: PORTADAS PERSONALIZADAS
-    // ==================================================
+      definitionElement.classList.add("changing");
 
-    function createPoster(item) {
-      const poster = createElement("div", "poster");
+      $("word").textContent = item.word;
 
-      // Este espacio queda vacío hasta que agregues una URL.
-      const placeholder = createElement("div", "poster-placeholder");
+      $("category").textContent = `(${item.category})`;
 
-      if (item.image && item.image.trim() !== "") {
-        const img = document.createElement("img");
+      $("meaning").textContent = item.meaning;
 
-        img.src = item.image.trim();
-        img.alt = `Portada de ${item.title}`;
-        img.loading = "lazy";
-        img.decoding = "async";
+    }
 
-        img.addEventListener("error", () => {
-          img.remove();
+    /* PÉTALOS QUE FLOTAN */
+
+    function releasePetals() {
+
+      for (let i = 0; i < 12; i++) {
+
+        const petal = document.createElement("span");
+
+        petal.className = "petal-fall";
+
+        petal.style.left =
+
+          `${35 + Math.random() * (flowers.clientWidth - 70)}px`;
+
+        petal.style.bottom = `${60 + Math.random() * 150}px`;
+
+        petal.style.setProperty(
+
+          "--dx",
+
+          `${(Math.random() - .5) * 180}px`
+
+        );
+
+        petal.style.setProperty(
+
+          "--dy",
+
+          `${-50 - Math.random() * 140}px`
+
+        );
+
+        petal.style.animationDelay = `${Math.random() * .5}s`;
+
+        flowers.appendChild(petal);
+
+        petal.addEventListener("animationend", () => {
+
+          petal.remove();
+
         }, { once: true });
 
-        poster.appendChild(img);
-      } else {
-        poster.appendChild(placeholder);
       }
 
-      return poster;
     }
 
-    function renderRecommendations(items, trackId) {
-      const track = document.getElementById(trackId);
-      const fragment = document.createDocumentFragment();
+    /* ABRIR LA PANTALLA INICIAL */
 
-      items.forEach(item => {
-        const card = createElement("article", "recommendation-card");
-        const poster = createPoster(item);
+    function enterGarden() {
 
-        const info = createElement("div", "recommendation-info");
+      if (isOpening) return;
 
-        const type = createElement(
-          "span",
-          "recommendation-type",
-          item.type
-        );
+      isOpening = true;
 
-        const title = createElement("h3", "", item.title);
+      splashScreen.classList.add("opening");
 
-        const description = createElement(
-          "p",
-          "",
-          item.description
-        );
+      splashEnvelopeButton.disabled = true;
 
-        const searchUrl =
-          "https://www.google.com/search?q=" +
-          encodeURIComponent(
-            `${item.search || item.title} ${item.mediaType === "movie" ? "película" : "serie novela"}`
-          );
+      window.setTimeout(() => {
 
-        const link = createLink(
-          "Ver información",
-          searchUrl,
-          "btn"
-        );
+        mainScreen.classList.add("visible");
 
-        info.append(type, title, description, link);
-        card.append(poster, info);
-        fragment.appendChild(card);
-      });
+        window.setTimeout(() => {
 
-      track.appendChild(fragment);
+          splashScreen.classList.add("leaving");
+
+          window.setTimeout(() => {
+
+            splashScreen.style.display = "none";
+
+            isOpening = false;
+
+          }, 850);
+
+        }, 250);
+
+      }, 650);
+
     }
 
-    // Todo se combina en una sola lista horizontal.
-    // Orden: novelas, series y películas.
+    /* TOCAR EL SOBRE DEL JARDÍN */
 
-    const allRecommendations = [
-      ...data.novelas,
-      ...data.series,
-      ...data.films
-    ];
+    function openEnvelope() {
 
-    renderRecommendations(
-      allRecommendations,
-      "recommendationsTrack"
-    );
+      if (!gardenOpened) {
 
-    // ==================================================
-    // CONTROLES DE TODOS LOS CARRUSELES
-    // ==================================================
+        gardenOpened = true;
 
-    function updateAllCarouselButtons() {
-      document.querySelectorAll("[data-carousel]").forEach(carousel => {
-        const track = carousel.querySelector(".carousel-track");
-        const prev = carousel.querySelector("[data-prev]");
-        const next = carousel.querySelector("[data-next]");
+        garden.classList.add("opened");
 
-        if (!track || !prev || !next) return;
+      }
 
-        const maxScroll = track.scrollWidth - track.clientWidth;
+      flowerCount++;
 
-        prev.disabled = track.scrollLeft <= 2;
-        next.disabled = track.scrollLeft >= maxScroll - 2;
-      });
-    }
+      changeDefinition();
 
-    document.querySelectorAll("[data-carousel]").forEach(carousel => {
-      const track = carousel.querySelector(".carousel-track");
-      const prev = carousel.querySelector("[data-prev]");
-      const next = carousel.querySelector("[data-next]");
+      releasePetals();
 
-      let isDragging = false;
-      let startX = 0;
-      let startScroll = 0;
-      let moved = false;
-      let suppressClick = false;
+      const newFlowers = Math.min(
 
-      function scrollByCard(direction) {
-        const card = track.firstElementChild;
-        if (!card) return;
+        3 + Math.floor(flowerCount / 2),
 
-        const styles = getComputedStyle(track);
-        const gap = parseFloat(styles.gap) || 0;
-        const distance = card.getBoundingClientRect().width + gap;
+        7
 
-        track.scrollBy({
-          left: direction * distance,
-          behavior: "smooth"
+      );
+
+      for (let i = 0; i < newFlowers; i++) {
+
+        createFlower(flowers, i, {
+
+          total: newFlowers,
+
+          spread: Math.min(230 + flowerCount * 7, 320),
+
+          minHeight: 75,
+
+          heightRange: 115
+
         });
+
       }
 
-      function updateButtons() {
-        const maxScroll = track.scrollWidth - track.clientWidth;
+      /* Mantener el jardín ligero */
 
-        prev.disabled = track.scrollLeft <= 2;
-        next.disabled = track.scrollLeft >= maxScroll - 2;
+      const allFlowers = flowers.querySelectorAll(".flower");
+
+      while (allFlowers.length > 0 &&
+
+             flowers.querySelectorAll(".flower").length > 65) {
+
+        flowers.querySelector(".flower").remove();
+
       }
 
-      prev.addEventListener("click", () => scrollByCard(-1));
-      next.addEventListener("click", () => scrollByCard(1));
+      /* Vibración suave en dispositivos compatibles */
 
-      track.addEventListener("scroll", updateButtons, {
-        passive: true
-      });
+      if ("vibrate" in navigator) {
 
-      track.addEventListener("mousedown", event => {
-        if (event.button !== 0) return;
+        navigator.vibrate(25);
 
-        isDragging = true;
-        moved = false;
-        startX = event.pageX;
-        startScroll = track.scrollLeft;
-
-        track.classList.add("dragging");
-      });
-
-      window.addEventListener("mousemove", event => {
-        if (!isDragging) return;
-
-        const distance = event.pageX - startX;
-
-        if (Math.abs(distance) > 5) moved = true;
-
-        track.scrollLeft = startScroll - distance;
-      });
-
-      function stopDragging() {
-        if (!isDragging) return;
-
-        isDragging = false;
-        track.classList.remove("dragging");
-
-        if (moved) {
-          suppressClick = true;
-
-          setTimeout(() => {
-            suppressClick = false;
-          }, 100);
-        }
       }
 
-      window.addEventListener("mouseup", stopDragging);
-      window.addEventListener("blur", stopDragging);
-
-      track.addEventListener("click", event => {
-        if (suppressClick) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-      }, true);
-
-      track.addEventListener("dragstart", event => {
-        if (event.target.closest("a, img")) {
-          event.preventDefault();
-        }
-      });
-
-      track.addEventListener("keydown", event => {
-        if (event.key === "ArrowRight") {
-          event.preventDefault();
-          scrollByCard(1);
-        }
-
-        if (event.key === "ArrowLeft") {
-          event.preventDefault();
-          scrollByCard(-1);
-        }
-
-        if (event.key === "Home") {
-          event.preventDefault();
-          track.scrollTo({
-            left: 0,
-            behavior: "smooth"
-          });
-        }
-
-        if (event.key === "End") {
-          event.preventDefault();
-          track.scrollTo({
-            left: track.scrollWidth,
-            behavior: "smooth"
-          });
-        }
-      });
-
-      window.addEventListener("resize", updateButtons);
-
-      requestAnimationFrame(updateButtons);
-    });
-
-    // ==================================================
-    // NAVBAR MÓVIL
-    // ==================================================
-
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
-    const navAnchors = navLinks.querySelectorAll("a");
-
-    function setMenuOpen(isOpen) {
-      navLinks.classList.toggle("open", isOpen);
-
-      menuToggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
-
-      menuToggle.setAttribute(
-        "aria-label",
-        isOpen ? "Cerrar menú" : "Abrir menú"
-      );
-
-      menuToggle.textContent = isOpen ? "✕" : "☰";
     }
 
-    menuToggle.addEventListener("click", () => {
-      const isOpen =
-        menuToggle.getAttribute("aria-expanded") === "true";
+    /* EVENTOS */
 
-      setMenuOpen(!isOpen);
-    });
+    splashEnvelopeButton.addEventListener("click", enterGarden);
 
-    navAnchors.forEach(link => {
-      link.addEventListener("click", () => setMenuOpen(false));
-    });
+    envelopeButton.addEventListener("click", openEnvelope);
 
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") setMenuOpen(false);
-    });
+    $("instruction").addEventListener("click", openEnvelope);
 
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 600) setMenuOpen(false);
-      updateAllCarouselButtons();
-    });
+    /* El jardín empieza con el sobre cerrado y sin flores visibles. */
 
-    // ==================================================
-    // SECCIÓN ACTIVA DEL NAVBAR
-    // ==================================================
-
-    if ("IntersectionObserver" in window) {
-      const sectionObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-
-          navAnchors.forEach(link => {
-            const active =
-              link.getAttribute("href") === `#${entry.target.id}`;
-
-            link.classList.toggle("active", active);
-
-            if (active) {
-              link.setAttribute("aria-current", "location");
-            } else {
-              link.removeAttribute("aria-current");
-            }
-          });
-        });
-      }, {
-        rootMargin: "-25% 0px -60% 0px"
-      });
-
-      document.querySelectorAll(
-        "#historia, #revelacion, #razones, #para-vos"
-      ).forEach(section => sectionObserver.observe(section));
-    }
-
-    // ==================================================
-    // VOLVER ARRIBA
-    // ==================================================
-
-    const backToTop = document.getElementById("backToTop");
-
-    function updateBackToTop() {
-      backToTop.classList.toggle(
-        "visible",
-        window.scrollY > 400
-      );
-    }
-
-    window.addEventListener("scroll", updateBackToTop, {
-      passive: true
-    });
-
-    backToTop.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches ? "auto" : "smooth"
-      });
-    });
-
-    updateBackToTop();
-    updateAllCarouselButtons();
   </script>
+
 </body>
+
 </html>
