@@ -4,24 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080b14">
-  <meta name="description" content="Un pequeño jardín de flores celestes hecho especialmente para ti.">
-  <title>Un pequeño jardín para ti</title>
+  <meta name="theme-color" content="#100d18">
+  <title>Mi obra de arte favorita 💜</title>
 
   <style>
     :root {
-      --background: #080b14;
-      --background-light: #11182a;
-      --blue: #8fc8ff;
-      --blue-light: #c5e5ff;
-      --text: #e0eaff;
-      --text-muted: #a4bdd8;
-
-      --violet: #8b5cf6;
-      --violet-light: #c4b5fd;
-      --violet-dark: #5b3b9e;
-
-      --cream: #211735;
+      --bg: #100d18;
+      --panel: #1b1626;
+      --purple: #a78bfa;
+      --purple-light: #c4b5fd;
+      --text: #f5f0ff;
+      --muted: #b9aecb;
+      --border: #393047;
     }
 
     * {
@@ -30,439 +24,368 @@
       padding: 0;
     }
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-
     body {
       min-height: 100vh;
       min-height: 100dvh;
-      font-family: Georgia, "Times New Roman", serif;
-      background: var(--background);
+      background: var(--bg);
       color: var(--text);
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
     }
 
-    /* PANTALLAS */
+    button {
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
 
     .screen {
-      position: fixed;
-      inset: 0;
-      display: flex;
+      display: none;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 24px 18px;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
-    .hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+    .screen.active {
+      display: flex;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 430px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--purple-light);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
     }
 
     /* PANTALLA INICIAL */
 
-    #intro {
-      background:
-        radial-gradient(
-          ellipse at 50% 38%,
-          #22203b 0%,
-          #111321 48%,
-          #080b14 100%
-        );
-    }
-
-    .intro-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 28px;
-      padding: 24px;
-      text-align: center;
-      animation: appear 1.2s ease both;
-    }
-
     .envelope {
       position: relative;
-      width: min(78vw, 320px);
-      height: 205px;
-      cursor: pointer;
-      perspective: 1000px;
-      filter: drop-shadow(0 14px 25px #00000045);
-      transition: transform 0.3s ease;
-    }
-
-    .envelope:active {
-      transform: scale(0.98);
-    }
-
-    .env-back {
-      position: absolute;
-      inset: 0;
-      border-radius: 5px;
-      background: #6541a5;
-      border: 1px solid #9b7ae0;
-    }
-
-    .env-front {
-      position: absolute;
-      inset: 0;
+      width: 155px;
+      height: 112px;
+      margin: 0 auto 35px;
+      background: #7753b8;
+      border-radius: 8px;
+      box-shadow: 0 15px 45px #0005;
       overflow: hidden;
-      background: #8b5cf6;
-      clip-path: polygon(
-        0 0,
-        50% 58%,
-        100% 0,
-        100% 100%,
-        0 100%
-      );
-      border-radius: 5px;
-      z-index: 3;
     }
 
-    .env-left,
-    .env-right {
+    .envelope::before,
+    .envelope::after {
+      content: "";
       position: absolute;
-      inset: 0;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
       z-index: 2;
     }
 
-    .env-left {
-      background: #7750c7;
-      clip-path: polygon(0 0, 50% 58%, 0 100%);
+    .envelope::before {
+      left: 0;
+      border-width: 0 0 112px 78px;
+      border-color: transparent transparent #9673d2 transparent;
     }
 
-    .env-right {
-      background: #6844b4;
-      clip-path: polygon(100% 0, 50% 58%, 100% 100%);
+    .envelope::after {
+      right: 0;
+      border-width: 112px 0 0 78px;
+      border-color: transparent transparent transparent #8661c4;
     }
 
-    .env-flap {
+    .envelope-flap {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 60%;
+      width: 0;
+      height: 0;
+      border-left: 77px solid transparent;
+      border-right: 77px solid transparent;
+      border-top: 62px solid #b49ae5;
+      z-index: 3;
+    }
+
+    .envelope-heart {
+      position: absolute;
       z-index: 4;
-      transform-origin: top center;
-      background: #a78bfa;
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      transition:
-        transform 0.8s ease,
-        z-index 0s 0.4s;
-      border-top: 1px solid #c4b5fd;
-      backface-visibility: visible;
+      top: 47px;
+      left: 0;
+      right: 0;
+      font-size: 23px;
     }
 
-    .seal {
-      position: absolute;
-      z-index: 5;
-      left: 50%;
-      top: 58%;
-      transform: translate(-50%, -50%);
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: #ffffff;
-      background: #6d45bb;
-      border: 1px solid #c4b5fd;
-      box-shadow: 0 3px 12px #35205c35;
-      font-size: 22px;
-      transition: opacity 0.3s;
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(32px, 8vw, 43px);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 18px;
     }
 
-    .letter {
-      position: absolute;
-      z-index: 1;
-      left: 7%;
-      width: 86%;
-      height: 82%;
-      top: 8%;
-      padding: 22px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: #f8f3ff;
-      color: #7651b5;
+    h1 span {
+      color: var(--purple-light);
       font-style: italic;
-      border-radius: 3px;
-      transition: transform 1s ease;
     }
 
-    .envelope.open .env-flap {
-      transform: rotateX(180deg);
-      z-index: 0;
-    }
-
-    .envelope.open .seal {
-      opacity: 0;
-    }
-
-    .envelope.open .letter {
-      transform: translateY(-80px);
-    }
-
-    .intro-title {
-      font-size: clamp(23px, 6vw, 32px);
-      font-weight: normal;
-      letter-spacing: 0.3px;
-      color: #d8c8ff;
-    }
-
-    .intro-subtitle {
-      max-width: 270px;
+    .description {
+      color: var(--muted);
       font-size: 15px;
       line-height: 1.8;
-      color: #b6a8d8;
-      font-style: italic;
+      max-width: 320px;
+      margin: 0 auto 30px;
     }
 
-    .hint {
-      margin-top: 3px;
-      font-family: Arial, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: 9px;
-      color: #a78bfa;
-      animation: breathe 2.5s infinite;
-    }
-
-    /* JARDÍN DE FLORES */
-
-    #garden {
-      background:
-        radial-gradient(
-          ellipse at 50% 42%,
-          #192238 0%,
-          #0d1424 48%,
-          #080b14 100%
-        );
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 54px;
+      padding: 15px 22px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      background: var(--purple);
+      color: #171020;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+
+    .button:active {
+      transform: scale(.97);
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--purple-light);
+      border-color: var(--border);
+    }
+
+    .signature {
+      margin-top: 25px;
+      font-size: 12px;
+      color: #81758f;
+      letter-spacing: .5px;
+    }
+
+    /* PANTALLA DEL JUEGO */
+
+    .game-content {
+      max-width: 390px;
+    }
+
+    .game-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .game-description {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .progress strong {
+      color: var(--purple-light);
+      font-weight: 600;
+    }
+
+    .puzzle {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+      aspect-ratio: 1;
+      padding: 8px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      margin: 0 auto 22px;
+    }
+
+    .tile {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      border: 2px solid transparent;
+      border-radius: 9px;
+      background-color: #292135;
+      background-repeat: no-repeat;
+      background-size: 200% 200%;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color .2s, transform .2s;
       touch-action: manipulation;
     }
 
-    #flower-layer {
+    .tile.selected {
+      border-color: var(--purple-light);
+      transform: scale(.96);
+      box-shadow: 0 0 0 3px #a78bfa35;
+    }
+
+    .tile:focus-visible {
+      outline: 3px solid var(--purple-light);
+      outline-offset: 2px;
+    }
+
+    .tile-number {
       position: absolute;
-      inset: 0;
-      overflow: hidden;
+      top: 8px;
+      left: 8px;
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #100d18bb;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
       pointer-events: none;
     }
 
-    /* FLORES */
-
-    .flower {
-      position: absolute;
-      width: var(--size, 46px);
-      height: calc(var(--size, 46px) * 1.7);
-      transform-origin: 50% 100%;
-      animation: grow 0.8s cubic-bezier(.2, .8, .3, 1) both;
-      filter: drop-shadow(0 0 5px #8fc8ff25);
+    .hint {
+      color: #a99bbd;
+      font-size: 12px;
+      line-height: 1.7;
+      margin-bottom: 22px;
     }
 
-    .flower .stem {
-      position: absolute;
-      top: 32%;
-      left: 48%;
-      width: 2px;
-      height: 65%;
-      border-radius: 100%;
-      background: linear-gradient(#85bb88, #b2d6a7);
-      transform: rotate(var(--lean, 8deg));
-      transform-origin: top;
+    .game-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
-    .flower .leaf {
-      position: absolute;
-      top: 57%;
-      left: 48%;
-      width: 34%;
-      height: 12%;
-      border-radius: 100% 0 100% 0;
-      background: #78ad83;
-      transform: rotate(-30deg);
+    /* RESULTADO FINAL */
+
+    .result {
+      display: none;
+      animation: appear .7s ease both;
     }
 
-    .flower .leaf.second {
-      top: 70%;
-      left: 28%;
-      transform: rotate(40deg) scaleX(-1);
+    .result.visible {
+      display: block;
     }
-
-    .flower .head {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 62%;
-      aspect-ratio: 1;
-      transform: translateX(-50%);
-    }
-
-    .flower .petal {
-      position: absolute;
-      width: 43%;
-      height: 43%;
-      left: 28.5%;
-      top: 28.5%;
-      border-radius: 50%;
-      background: #8fc2ed;
-      border: 1px solid #b3d8f6;
-      transform-origin: 50% 50%;
-      box-shadow:
-        inset -2px -2px 4px #5d9dd822,
-        0 0 5px #8fc8ff20;
-    }
-
-    .flower .center {
-      position: absolute;
-      width: 19%;
-      height: 19%;
-      top: 40.5%;
-      left: 40.5%;
-      background: #f8dba0;
-      border-radius: 50%;
-      border: 1px solid #f2c875;
-    }
-
-    /* FRASES */
-
-    .garden-content {
-      position: relative;
-      z-index: 2;
-      width: min(88%, 430px);
-      padding: 30px 20px;
-      text-align: center;
-      pointer-events: none;
-      margin-top: -5px;
-    }
-
-    .phrase-card {
-      padding: 27px 17px;
-      border-radius: 3px;
-      background: #111827a8;
-      border: 1px solid #b5d8ff18;
-      box-shadow: 0 10px 40px #00000012;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      animation: appear 0.7s ease both;
-    }
-
-    .phrase-word {
-      margin-bottom: 20px;
-      font-size: clamp(19px, 5vw, 24px);
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      font-weight: normal;
-      color: #a9d6ff;
-    }
-
-    .phrase-definition {
-      font-size: clamp(16px, 4.2vw, 20px);
-      font-style: italic;
-      line-height: 1.85;
-      color: #e0eaff;
-    }
-
-    .phrase-divider {
-      width: 30px;
-      height: 1px;
-      margin: 23px auto 0;
-      background: #7caedb;
-    }
-
-    .garden-hint {
-      margin-top: 23px;
-      font-family: Arial, sans-serif;
-      font-size: 9px;
-      letter-spacing: 2px;
-      line-height: 1.8;
-      text-transform: uppercase;
-      color: #a4bdd8;
-      opacity: 0.9;
-    }
-
-    /* ANIMACIONES */
 
     @keyframes appear {
       from {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(15px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
 
-    @keyframes breathe {
-      0%, 100% {
-        opacity: 0.55;
-      }
-
-      50% {
-        opacity: 1;
-      }
+    .complete-image {
+      display: block;
+      width: min(100%, 300px);
+      aspect-ratio: 1;
+      object-fit: cover;
+      margin: 0 auto 25px;
+      border-radius: 18px;
+      border: 1px solid #57456f;
+      box-shadow: 0 15px 45px #0005;
     }
 
-    @keyframes grow {
-      from {
-        opacity: 0;
-        transform: scale(0.1) rotate(-15deg);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1) rotate(0);
-      }
+    .result-label {
+      color: var(--purple-light);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 13px;
     }
 
-    /* ADAPTACIÓN A CELULARES */
+    .result h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(29px, 8vw, 38px);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 17px;
+    }
 
-    @media (max-height: 560px) {
-      .intro-content {
-        gap: 14px;
+    .result h2 span {
+      color: var(--purple-light);
+      font-style: italic;
+    }
+
+    .result-message {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 26px;
+    }
+
+    .result .button + .button {
+      margin-top: 10px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-height: 680px) {
+      .screen {
+        padding-top: 18px;
+        padding-bottom: 18px;
       }
 
       .envelope {
-        height: 150px;
+        margin-bottom: 24px;
+        transform: scale(.85);
       }
 
-      .garden-content {
-        padding: 12px;
+      .eyebrow {
+        margin-bottom: 18px;
       }
 
-      .phrase-card {
-        padding: 16px 12px;
+      .game-title {
+        font-size: 29px;
       }
 
-      .phrase-word {
-        margin-bottom: 10px;
+      .game-description {
+        margin-bottom: 16px;
       }
 
-      .phrase-divider {
-        margin-top: 12px;
-      }
-
-      .garden-hint {
-        margin-top: 12px;
+      .puzzle {
+        max-width: min(100%, 330px);
+        margin-bottom: 14px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
       }
     }
   </style>
@@ -470,443 +393,338 @@
 
 <body>
 
-  <!-- PRIMERA PANTALLA: CARTA -->
+  <!-- PANTALLA 1: SPLASH SCREEN -->
+  <main>
+    <section id="splash" class="screen active">
+      <div class="content">
 
-  <section id="intro" class="screen">
-    <div class="intro-content">
+        <p class="eyebrow">Un pequeño juego para vos</p>
 
-      <div
-        class="envelope"
-        id="envelope"
-        role="button"
-        tabindex="0"
-        aria-label="Abrir la carta"
-      >
-        <div class="env-back"></div>
-
-        <div class="letter">
-          <span>Un pequeño jardín para ti.</span>
+        <div class="envelope" aria-hidden="true">
+          <div class="envelope-flap"></div>
+          <div class="envelope-heart">♡</div>
         </div>
 
-        <div class="env-left"></div>
-        <div class="env-right"></div>
-        <div class="env-front"></div>
-        <div class="env-flap"></div>
+        <h1>
+          ¿Jugamos<br>
+          a descubrir<br>
+          <span>una obra de arte?</span>
+        </h1>
 
-        <div class="seal" aria-hidden="true">✿</div>
-      </div>
-
-      <h1 class="intro-title">Para ti</h1>
-
-      <p class="intro-subtitle">
-        Hay algo bonito esperando por vos...
-      </p>
-
-      <p class="hint">Tocá la carta para abrirla</p>
-
-    </div>
-  </section>
-
-  <!-- SEGUNDA PANTALLA: JARDÍN -->
-
-  <section
-    id="garden"
-    class="screen hidden"
-    aria-label="Jardín de flores celestes"
-  >
-    <div id="flower-layer"></div>
-
-    <main class="garden-content">
-      <div class="phrase-card" id="phrase-card" aria-live="polite">
-        <h2 class="phrase-word" id="phrase-word">Belleza</h2>
-
-        <p class="phrase-definition" id="phrase-definition">
-          Cualidad de lo bello, que despierta admiración y deleite.
+        <p class="description">
+          Hay una imagen esperando a ser descubierta.
+          Solo tenés que unir las cuatro piezas
+          para encontrarla.
         </p>
 
-        <div class="phrase-divider"></div>
-      </div>
+        <button id="startButton" class="button">
+          Comenzar el juego <span aria-hidden="true">♡</span>
+        </button>
 
-      <p class="garden-hint">
-        Tocá la pantalla para hacer florecer el jardín
-      </p>
-    </main>
-  </section>
+        <p class="signature">Hecho especialmente para vos.</p>
+
+      </div>
+    </section>
+
+    <!-- PANTALLA 2: ROMPECABEZAS -->
+    <section id="game" class="screen">
+      <div class="content game-content">
+
+        <div id="puzzleArea">
+          <p class="eyebrow">Tu pequeño desafío</p>
+
+          <h2 class="game-title">Uní las piezas</h2>
+
+          <p class="game-description">
+            Tocá dos piezas para intercambiar sus lugares.
+            Ordenalas hasta descubrir la imagen completa.
+          </p>
+
+          <div class="progress">
+            <span>Tu rompecabezas</span>
+            <strong id="progressText">0 de 4 piezas</strong>
+          </div>
+
+          <div
+            id="puzzle"
+            class="puzzle"
+            aria-label="Rompecabezas de cuatro piezas"
+          ></div>
+
+          <p class="hint">
+            Elegí una pieza y después la que querés intercambiar.
+          </p>
+
+          <div class="game-actions">
+            <button id="shuffleButton" class="button secondary">
+              Mezclar piezas
+            </button>
+            <button id="backButton" class="button secondary">
+              Volver
+            </button>
+          </div>
+        </div>
+
+        <!-- RESULTADO AL COMPLETAR -->
+        <div id="result" class="result">
+          <p class="eyebrow">Lo lograste</p>
+
+          <img
+            id="completeImage"
+            class="complete-image"
+            alt="Ilustración completa de mi obra de arte favorita"
+          >
+
+          <p class="result-label">Si me preguntaran qué es el arte...</p>
+
+          <h2>Mi obra de<br><span>arte favorita.</span></h2>
+
+          <p class="result-message">
+            No hay cuadro ni paisaje que pueda compararse
+            con la belleza que veo en vos. 💜
+          </p>
+
+          <button id="againButton" class="button">
+            Volver a jugar
+          </button>
+
+          <button id="homeButton" class="button secondary">
+            Volver al inicio
+          </button>
+        </div>
+
+      </div>
+    </section>
+  </main>
 
   <script>
-    const intro = document.getElementById("intro");
-    const garden = document.getElementById("garden");
-    const envelope = document.getElementById("envelope");
-    const flowerLayer = document.getElementById("flower-layer");
-    const phraseCard = document.getElementById("phrase-card");
-    const phraseWord = document.getElementById("phrase-word");
-    const phraseDefinition = document.getElementById("phrase-definition");
+    /*
+      =========================================
+      CONFIGURACIÓN
+      =========================================
 
-    let opened = false;
-    let lastPhraseIndex = -1;
+      Reemplazá "imagen-de-ella.jpg" por la ruta
+      o URL de la ilustración de tu novia.
 
-    const phrases = [
-      {
-        word: "Belleza",
-        definition: "Cualidad de lo bello, que despierta admiración y deleite."
-      },
-      {
-        word: "Encanto",
-        definition: "Aquello que cautiva de una manera difícil de explicar."
-      },
-      {
-        word: "Hermosura",
-        definition: "Cualidad que hace que algo resulte digno de contemplar."
-      },
-      {
-        word: "Admiración",
-        definition: "Sentimiento que nace al descubrir algo extraordinario."
-      },
-      {
-        word: "Delicadeza",
-        definition: "Cualidad de aquello que inspira ternura y cuidado."
-      },
-      {
-        word: "Esplendor",
-        definition: "Brillo y belleza que destacan de manera extraordinaria."
-      },
-      {
-        word: "Armonía",
-        definition: "Grata proporción y correspondencia entre las cosas."
-      },
-      {
-        word: "Gracia",
-        definition: "Cualidad que hace que algo resulte agradable y especial."
-      },
-      {
-        word: "Maravilla",
-        definition: "Aquello que causa admiración por su belleza extraordinaria."
-      },
-      {
-        word: "Luz",
-        definition: "Claridad que ilumina; aquello que vuelve todo más bello."
-      },
-      {
-        word: "Única",
-        definition: "Que no tiene semejante y resulta imposible de reemplazar."
-      },
-      {
-        word: "Ternura",
-        definition: "Sentimiento de cariño que inspira suavidad y dulzura."
-      },
-      {
-        word: "Autenticidad",
-        definition: "Cualidad de ser genuino, verdadero y fiel a uno mismo."
-      },
-      {
-        word: "Adorable",
-        definition: "Digno de cariño, afecto y admiración."
-      },
-      {
-        word: "Fascinación",
-        definition: "Atracción intensa que despierta algo extraordinario."
-      },
-      {
-        word: "Belleza interior",
-        definition: "Aquella que nace de la esencia y se refleja en los actos."
-      },
-      {
-        word: "Encantadora",
-        definition: "Que atrae por su dulzura, su gracia o su manera de ser."
-      },
-      {
-        word: "Excepcional",
-        definition: "Que se distingue de lo común por sus cualidades."
-      },
-      {
-        word: "Inolvidable",
-        definition: "Que por su importancia o belleza permanece en la memoria."
-      },
-      {
-        word: "Esencia",
-        definition: "Lo más puro y característico de alguien."
-      },
-      {
-        word: "Poético",
-        definition: "Que expresa belleza, emoción y sensibilidad."
-      },
-      {
-        word: "Serenidad",
-        definition: "Calma y armonía que transmiten paz."
-      },
-      {
-        word: "Resplandecer",
-        definition: "Brillar con luz propia."
-      },
-      {
-        word: "Asombro",
-        definition: "Admiración que nace ante algo extraordinario."
-      },
-      {
-        word: "Especial",
-        definition: "Que sobresale por una cualidad que lo hace diferente."
-      },
-      {
-        word: "Apreciar",
-        definition: "Reconocer el valor y la belleza de algo o alguien."
-      },
-      {
-        word: "Sublime",
-        definition: "Tan bello o extraordinario que despierta una emoción profunda."
-      },
-      {
-        word: "Perfectamente imperfecta",
-        definition: "La belleza de ser real, sin necesidad de ser perfecta."
-      },
-      {
-        word: "Admirable",
-        definition: "Que merece estima, respeto y admiración."
-      },
-      {
-        word: "Preciosa",
-        definition: "De gran belleza, valor o especial encanto."
-      },
-      {
-        word: "Felicidad",
-        definition: "Estado de grata satisfacción espiritual y física."
-      },
-      {
-        word: "Magia",
-        definition: "Encanto que parece transformar lo cotidiano en algo extraordinario."
-      },
-      {
-        word: "Auténtica belleza",
-        definition: "Aquella que no necesita comparaciones para ser reconocida."
-      },
-      {
-        word: "Infinito",
-        definition: "Que no tiene fin ni límite."
-      },
-      {
-        word: "Admirarte",
-        definition: "Encontrar siempre algo hermoso que descubrir en vos."
-      },
-      {
-        word: "Florecer",
-        definition: "Desarrollarse con belleza y plenitud."
-      },
-      {
-        word: "Extraordinaria",
-        definition: "Que se distingue por cualidades que despiertan admiración."
-      },
-      {
-        word: "Inspiración",
-        definition: "Estímulo que despierta ideas, emociones o belleza."
-      },
-      {
-        word: "Belleza natural",
-        definition: "La que aparece sin artificios, en la sencillez de lo auténtico."
-      },
-      {
-        word: "Tesoro",
-        definition: "Algo muy valioso que merece ser cuidado."
-      },
-      {
-        word: "Inmensidad",
-        definition: "Grandeza que parece no tener límites."
-      },
-      {
-        word: "Afecto",
-        definition: "Inclinación cariñosa hacia alguien."
-      },
-      {
-        word: "Dulzura",
-        definition: "Cualidad de quien inspira cariño y ternura."
-      },
-      {
-        word: "Encanto natural",
-        definition: "La cualidad de cautivar sin siquiera intentarlo."
-      },
-      {
-        word: "Luminosa",
-        definition: "Que transmite luz, alegría o una sensación de calidez."
-      },
-      {
-        word: "Singular",
-        definition: "Que destaca por ser particular y diferente de los demás."
-      },
-      {
-        word: "Gratitud",
-        definition: "Sentimiento de reconocimiento por el bien recibido."
-      },
-      {
-        word: "Asombrosa",
-        definition: "Que causa sorpresa y admiración por sus cualidades."
-      },
-      {
-        word: "Incomparable",
-        definition: "Que no encuentra algo igual con lo que pueda compararse."
-      },
-      {
-        word: "Amor",
-        definition: "Sentimiento de afecto profundo que inspira cuidado y entrega."
-      },
-      {
-        word: "Florecer juntos",
-        definition: "Crecer compartiendo la belleza de cada nuevo día."
-      },
-      {
-        word: "Tu sonrisa",
-        definition: "Una pequeña expresión capaz de volver más bonito un día."
-      },
-      {
-        word: "Tu mirada",
-        definition: "Una forma silenciosa de decir mucho sin pronunciar palabras."
-      },
-      {
-        word: "Tu esencia",
-        definition: "Eso que te hace ser vos y nadie más."
-      },
-      {
-        word: "Tu presencia",
-        definition: "La manera en que alguien puede hacer más lindo un lugar."
-      },
-      {
-        word: "Tu forma de ser",
-        definition: "Una belleza que se descubre en los pequeños detalles."
-      },
-      {
-        word: "Lo auténtico",
-        definition: "Aquello que conserva su valor sin necesitar aparentar."
-      },
-      {
-        word: "Lo extraordinario",
-        definition: "Aquello que transforma un instante común en un recuerdo especial."
-      },
-      {
-        word: "Admiración sincera",
-        definition: "Reconocer la belleza de alguien sin necesidad de exagerarla."
-      },
-      {
-        word: "Gracias por existir",
-        definition: "Hay personas cuya presencia hace más bonito el mundo."
-      },
-      {
-        word: "Para vos",
-        definition: "Porque algunas cosas bonitas merecen ser compartidas."
-      }
-    ];
+      La misma imagen se divide automáticamente
+      en cuatro cuadrantes.
+    */
 
-    // ABRIR LA CARTA
+    const IMAGE_URL = "imagen-de-ella.jpg";
 
-    function openLetter() {
-      if (opened) return;
-      opened = true;
+    const splash = document.getElementById("splash");
+    const game = document.getElementById("game");
+    const puzzle = document.getElementById("puzzle");
+    const puzzleArea = document.getElementById("puzzleArea");
+    const result = document.getElementById("result");
+    const completeImage = document.getElementById("completeImage");
+    const progressText = document.getElementById("progressText");
 
-      envelope.classList.add("open");
+    const startButton = document.getElementById("startButton");
+    const shuffleButton = document.getElementById("shuffleButton");
+    const backButton = document.getElementById("backButton");
+    const againButton = document.getElementById("againButton");
+    const homeButton = document.getElementById("homeButton");
 
-      setTimeout(() => {
-        intro.classList.add("hidden");
-        garden.classList.remove("hidden");
+    // Cada número representa una pieza original.
+    // 0 = arriba izquierda
+    // 1 = arriba derecha
+    // 2 = abajo izquierda
+    // 3 = abajo derecha
 
-        addFlowers(11);
-        changePhrase();
-      }, 950);
-    }
+    let pieces = [0, 1, 2, 3];
+    let selectedIndex = null;
+    let imageReady = false;
 
-    envelope.addEventListener("click", openLetter);
+    const image = new Image();
 
-    envelope.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openLetter();
-      }
-    });
+    image.onload = () => {
+      imageReady = true;
+      updateTiles();
+    };
 
-    // CREAR FLORES
-
-    function createFlower(x, y, size, delay = 0) {
-      const flower = document.createElement("div");
-      flower.className = "flower";
-
-      flower.style.left = `${x}%`;
-      flower.style.top = `${y}%`;
-      flower.style.setProperty("--size", `${size}px`);
-      flower.style.setProperty(
-        "--lean",
-        `${Math.random() * 30 - 15}deg`
+    image.onerror = () => {
+      imageReady = false;
+      console.warn(
+        "No se pudo cargar la ilustración. Revisá IMAGE_URL."
       );
-      flower.style.animationDelay = `${delay}ms`;
+    };
 
-      const head = document.createElement("div");
-      head.className = "head";
+    image.src = IMAGE_URL;
+    completeImage.src = IMAGE_URL;
 
-      for (let i = 0; i < 5; i++) {
-        const petal = document.createElement("span");
-        petal.className = "petal";
-        petal.style.transform =
-          `rotate(${i * 72}deg) translateY(-65%)`;
-        head.appendChild(petal);
-      }
-
-      const center = document.createElement("span");
-      center.className = "center";
-      head.appendChild(center);
-
-      const stem = document.createElement("div");
-      stem.className = "stem";
-
-      const leaf1 = document.createElement("div");
-      leaf1.className = "leaf";
-
-      const leaf2 = document.createElement("div");
-      leaf2.className = "leaf second";
-
-      flower.append(head, stem, leaf1, leaf2);
-      flowerLayer.appendChild(flower);
+    // Cambiar entre pantallas.
+    function showScreen(screen) {
+      splash.classList.remove("active");
+      game.classList.remove("active");
+      screen.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // DISTRIBUIR FLORES POR EL JARDÍN
+    // Crear las cuatro piezas.
+    function createPuzzle() {
+      puzzle.innerHTML = "";
 
-    function addFlowers(amount) {
-      for (let i = 0; i < amount; i++) {
-        const x = 3 + Math.random() * 91;
-        const y = 4 + Math.random() * 87;
-        const size = 22 + Math.random() * 25;
+      pieces.forEach((piece, index) => {
+        const tile = document.createElement("button");
 
-        createFlower(x, y, size, i * 55);
-      }
+        tile.type = "button";
+        tile.className = "tile";
+        tile.dataset.index = index;
+        tile.setAttribute(
+          "aria-label",
+          `Posición ${index + 1}, pieza ${piece + 1}`
+        );
+
+        const number = document.createElement("span");
+        number.className = "tile-number";
+        number.textContent = piece + 1;
+
+        tile.appendChild(number);
+        tile.addEventListener("click", () => selectTile(index));
+
+        puzzle.appendChild(tile);
+      });
+
+      updateTiles();
     }
 
-    // MOSTRAR UNA SOLA FRASE ALEATORIA
+    // Mostrar el cuadrante correspondiente a cada pieza.
+    function updateTiles() {
+      const tiles = puzzle.querySelectorAll(".tile");
 
-    function changePhrase() {
-      let index;
+      tiles.forEach((tile, index) => {
+        const piece = pieces[index];
 
-      if (phrases.length <= 1) {
-        index = 0;
-      } else {
-        do {
-          index = Math.floor(Math.random() * phrases.length);
-        } while (index === lastPhraseIndex);
-      }
+        const positions = [
+          "0% 0%",
+          "100% 0%",
+          "0% 100%",
+          "100% 100%"
+        ];
 
-      lastPhraseIndex = index;
+        if (imageReady) {
+          tile.style.backgroundImage = `url("${IMAGE_URL}")`;
+          tile.style.backgroundPosition = positions[piece];
+        } else {
+          tile.style.backgroundImage = "none";
+          tile.style.backgroundPosition = "center";
+        }
 
-      phraseCard.style.animation = "none";
-      void phraseCard.offsetWidth;
+        const number = tile.querySelector(".tile-number");
 
-      phraseWord.textContent = phrases[index].word;
-      phraseDefinition.textContent = phrases[index].definition;
+        if (number) {
+          number.textContent = piece + 1;
+        }
 
-      phraseCard.style.animation = "appear 0.7s ease both";
+        tile.classList.toggle(
+          "selected",
+          selectedIndex === index
+        );
+
+        tile.setAttribute(
+          "aria-label",
+          `Posición ${index + 1}, pieza ${piece + 1}` +
+          (selectedIndex === index ? ", seleccionada" : "")
+        );
+      });
+
+      updateProgress();
     }
 
-    // CADA TOQUE AGREGA FLORES Y CAMBIA LA FRASE
+    // Seleccionar una pieza e intercambiarla con otra.
+    function selectTile(index) {
+      if (selectedIndex === null) {
+        selectedIndex = index;
+        updateTiles();
+        return;
+      }
 
-    garden.addEventListener("pointerdown", (event) => {
-      if (garden.classList.contains("hidden")) return;
+      if (selectedIndex === index) {
+        selectedIndex = null;
+        updateTiles();
+        return;
+      }
 
-      event.preventDefault();
+      const first = selectedIndex;
 
-      addFlowers(3 + Math.floor(Math.random() * 3));
-      changePhrase();
+      [pieces[first], pieces[index]] =
+        [pieces[index], pieces[first]];
+
+      selectedIndex = null;
+      updateTiles();
+      checkWin();
+    }
+
+    // Contar cuántas piezas están en el lugar correcto.
+    function updateProgress() {
+      const correct = pieces.filter(
+        (piece, index) => piece === index
+      ).length;
+
+      progressText.textContent = `${correct} de 4 piezas`;
+    }
+
+    // Mezclar evitando que el juego empiece resuelto.
+    function shufflePieces() {
+      do {
+        pieces = [0, 1, 2, 3];
+
+        for (let i = pieces.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+        }
+      } while (
+        pieces.every((piece, index) => piece === index)
+      );
+
+      selectedIndex = null;
+      createPuzzle();
+
+      result.classList.remove("visible");
+      puzzleArea.classList.remove("hidden");
+    }
+
+    // Comprobar si las cuatro piezas están ordenadas.
+    function checkWin() {
+      const solved = pieces.every(
+        (piece, index) => piece === index
+      );
+
+      if (!solved) return;
+
+      selectedIndex = null;
+
+      // Mostrar la imagen completa y la dedicatoria.
+      completeImage.src = IMAGE_URL;
+      puzzleArea.classList.add("hidden");
+      result.classList.add("visible");
+    }
+
+    // Eventos de navegación.
+    startButton.addEventListener("click", () => {
+      showScreen(game);
+      shufflePieces();
     });
+
+    shuffleButton.addEventListener("click", shufflePieces);
+
+    backButton.addEventListener("click", () => {
+      showScreen(splash);
+    });
+
+    againButton.addEventListener("click", () => {
+      shufflePieces();
+    });
+
+    homeButton.addEventListener("click", () => {
+      result.classList.remove("visible");
+      puzzleArea.classList.remove("hidden");
+      showScreen(splash);
+    });
+
+    // Preparar el tablero inicial.
+    createPuzzle();
   </script>
 
 </body>
