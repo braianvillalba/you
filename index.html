@@ -1,731 +1,1139 @@
 
+
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta name="theme-color" content="#100d18">
+
   <title>Mi obra de arte favorita 💜</title>
 
   <style>
+
     :root {
+
       --bg: #100d18;
+
       --panel: #1b1626;
+
       --purple: #a78bfa;
-      --purple-light: #c4b5fd;
-      --text: #f5f0ff;
+
+      --light: #d8c9ff;
+
+      --text: #f7f2ff;
+
       --muted: #b9aecb;
+
       --border: #393047;
+
     }
 
     * {
+
       box-sizing: border-box;
+
       margin: 0;
+
       padding: 0;
+
     }
 
     body {
+
       min-height: 100vh;
+
       min-height: 100dvh;
+
       background: var(--bg);
+
       color: var(--text);
+
       font-family: -apple-system, BlinkMacSystemFont,
+
         "Segoe UI", sans-serif;
+
     }
 
     button {
+
       font: inherit;
+
       -webkit-tap-highlight-color: transparent;
+
     }
 
     .screen {
+
       display: none;
+
       min-height: 100vh;
+
       min-height: 100dvh;
-      padding: 24px 18px;
+
+      padding: 28px 20px;
+
       align-items: center;
+
       justify-content: center;
+
     }
 
     .screen.active {
+
       display: flex;
+
     }
 
     .content {
+
       width: 100%;
-      max-width: 430px;
+
+      max-width: 420px;
+
+      margin: auto;
+
       text-align: center;
+
     }
 
     .eyebrow {
-      color: var(--purple-light);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+
       margin-bottom: 25px;
+
+      color: var(--light);
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
     }
 
-    /* PANTALLA INICIAL */
+    /* SPLASH SCREEN */
 
     .envelope {
+
       position: relative;
-      width: 155px;
-      height: 112px;
+
+      width: 150px;
+
+      height: 105px;
+
       margin: 0 auto 35px;
-      background: #7753b8;
-      border-radius: 8px;
-      box-shadow: 0 15px 45px #0005;
+
       overflow: hidden;
+
+      border-radius: 7px;
+
+      background: #7956b8;
+
+      box-shadow: 0 18px 45px #0005;
+
     }
 
     .envelope::before,
+
     .envelope::after {
+
       content: "";
+
       position: absolute;
+
       bottom: 0;
+
       width: 0;
+
       height: 0;
+
       border-style: solid;
-      z-index: 2;
+
     }
 
     .envelope::before {
+
       left: 0;
-      border-width: 0 0 112px 78px;
-      border-color: transparent transparent #9673d2 transparent;
+
+      border-width: 0 0 105px 75px;
+
+      border-color: transparent transparent #9673d2;
+
+      z-index: 2;
+
     }
 
     .envelope::after {
+
       right: 0;
-      border-width: 112px 0 0 78px;
+
+      border-width: 105px 0 0 75px;
+
       border-color: transparent transparent transparent #8661c4;
+
+      z-index: 2;
+
     }
 
-    .envelope-flap {
+    .flap {
+
       position: absolute;
+
       top: 0;
+
       left: 0;
-      width: 0;
-      height: 0;
-      border-left: 77px solid transparent;
-      border-right: 77px solid transparent;
-      border-top: 62px solid #b49ae5;
+
       z-index: 3;
+
+      width: 0;
+
+      height: 0;
+
+      border-left: 75px solid transparent;
+
+      border-right: 75px solid transparent;
+
+      border-top: 59px solid #b49ae5;
+
     }
 
-    .envelope-heart {
+    .heart {
+
       position: absolute;
-      z-index: 4;
-      top: 47px;
+
+      top: 42px;
+
       left: 0;
+
       right: 0;
-      font-size: 23px;
+
+      z-index: 4;
+
+      font-size: 25px;
+
     }
 
     h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(32px, 8vw, 43px);
-      font-weight: 400;
-      line-height: 1.15;
-      letter-spacing: -1px;
+
       margin-bottom: 18px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(34px, 9vw, 45px);
+
+      font-weight: 400;
+
+      line-height: 1.14;
+
+      letter-spacing: -1px;
+
     }
 
-    h1 span {
-      color: var(--purple-light);
+    h1 span,
+
+    .result h2 span {
+
+      color: var(--light);
+
       font-style: italic;
+
     }
 
     .description {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.8;
-      max-width: 320px;
+
+      max-width: 315px;
+
       margin: 0 auto 30px;
+
+      color: var(--muted);
+
+      font-size: 14px;
+
+      line-height: 1.9;
+
     }
 
     .button {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
+
+      display: flex;
+
       width: 100%;
-      min-height: 54px;
-      padding: 15px 22px;
+
+      min-height: 53px;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      padding: 14px 20px;
+
       border: 1px solid transparent;
-      border-radius: 14px;
+
+      border-radius: 13px;
+
       background: var(--purple);
+
       color: #171020;
-      font-size: 15px;
+
+      font-size: 14px;
+
       font-weight: 700;
+
       cursor: pointer;
+
       transition: transform .2s, background .2s;
+
     }
 
     .button:active {
+
       transform: scale(.97);
+
     }
 
     .button.secondary {
-      background: transparent;
-      color: var(--purple-light);
+
       border-color: var(--border);
+
+      background: transparent;
+
+      color: var(--light);
+
     }
 
     .signature {
-      margin-top: 25px;
+
+      margin-top: 24px;
+
+      color: #887b98;
+
       font-size: 12px;
-      color: #81758f;
-      letter-spacing: .5px;
+
     }
 
-    /* PANTALLA DEL JUEGO */
-
-    .game-content {
-      max-width: 390px;
-    }
+    /* ROMPECABEZAS */
 
     .game-title {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 34px;
-      font-weight: 400;
+
       margin-bottom: 12px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 35px;
+
+      font-weight: 400;
+
     }
 
     .game-description {
+
+      max-width: 320px;
+
+      margin: 0 auto 25px;
+
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-      margin-bottom: 25px;
+
+      font-size: 13px;
+
+      line-height: 1.8;
+
     }
 
     .progress {
+
       display: flex;
-      align-items: center;
+
       justify-content: space-between;
-      gap: 12px;
-      color: var(--muted);
-      font-size: 12px;
+
+      gap: 10px;
+
       margin-bottom: 12px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
     }
 
     .progress strong {
-      color: var(--purple-light);
-      font-weight: 600;
+
+      color: var(--light);
+
     }
 
     .puzzle {
+
       display: grid;
+
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+
+      gap: 9px;
+
       width: 100%;
+
       aspect-ratio: 1;
+
       padding: 8px;
-      background: var(--panel);
+
+      margin-bottom: 18px;
+
       border: 1px solid var(--border);
-      border-radius: 18px;
-      margin: 0 auto 22px;
+
+      border-radius: 17px;
+
+      background: var(--panel);
+
     }
 
-    .tile {
+    .piece {
+
       position: relative;
+
       min-width: 0;
+
       min-height: 0;
-      border: 2px solid transparent;
-      border-radius: 9px;
-      background-color: #292135;
-      background-repeat: no-repeat;
-      background-size: 200% 200%;
-      cursor: pointer;
+
       overflow: hidden;
+
+      padding: 0;
+
+      border: 2px solid transparent;
+
+      border-radius: 9px;
+
+      background: #292135;
+
+      cursor: pointer;
+
       transition: border-color .2s, transform .2s;
-      touch-action: manipulation;
+
     }
 
-    .tile.selected {
-      border-color: var(--purple-light);
+    .piece img {
+
+      display: block;
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+    }
+
+    .piece.selected {
+
+      z-index: 1;
+
       transform: scale(.96);
+
+      border-color: var(--light);
+
       box-shadow: 0 0 0 3px #a78bfa35;
+
     }
 
-    .tile:focus-visible {
-      outline: 3px solid var(--purple-light);
-      outline-offset: 2px;
-    }
+    .piece-number {
 
-    .tile-number {
       position: absolute;
-      top: 8px;
-      left: 8px;
-      width: 25px;
-      height: 25px;
+
+      top: 7px;
+
+      left: 7px;
+
       display: grid;
+
+      width: 25px;
+
+      height: 25px;
+
       place-items: center;
+
+      border: 1px solid #ffffff35;
+
       border-radius: 50%;
-      background: #100d18bb;
+
+      background: #100d18cc;
+
       color: white;
+
       font-size: 12px;
+
       font-weight: 700;
+
       pointer-events: none;
+
     }
 
     .hint {
+
+      margin-bottom: 20px;
+
       color: #a99bbd;
+
       font-size: 12px;
+
       line-height: 1.7;
-      margin-bottom: 22px;
+
     }
 
-    .game-actions {
+    .actions {
+
       display: grid;
+
       grid-template-columns: 1fr 1fr;
+
       gap: 10px;
+
     }
 
-    /* RESULTADO FINAL */
+    /* RESULTADO */
 
     .result {
+
       display: none;
-      animation: appear .7s ease both;
+
+      animation: appear .65s ease both;
+
     }
 
     .result.visible {
+
       display: block;
+
     }
 
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .final-gallery {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 7px;
+
+      padding: 7px;
+
+      margin: 0 auto 26px;
+
+      border: 1px solid #514067;
+
+      border-radius: 16px;
+
+      background: var(--panel);
+
     }
 
-    .complete-image {
+    .final-gallery img {
+
       display: block;
-      width: min(100%, 300px);
+
+      width: 100%;
+
       aspect-ratio: 1;
+
       object-fit: cover;
-      margin: 0 auto 25px;
-      border-radius: 18px;
-      border: 1px solid #57456f;
-      box-shadow: 0 15px 45px #0005;
+
+      border-radius: 8px;
+
     }
 
     .result-label {
-      color: var(--purple-light);
-      text-transform: uppercase;
-      letter-spacing: 3px;
+
+      margin-bottom: 14px;
+
+      color: var(--light);
+
       font-size: 10px;
+
       font-weight: 700;
-      margin-bottom: 13px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
     }
 
     .result h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(29px, 8vw, 38px);
-      font-weight: 400;
-      line-height: 1.2;
-      margin-bottom: 17px;
-    }
 
-    .result h2 span {
-      color: var(--purple-light);
-      font-style: italic;
+      margin-bottom: 18px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(32px, 8vw, 41px);
+
+      font-weight: 400;
+
+      line-height: 1.2;
+
     }
 
     .result-message {
+
+      margin-bottom: 25px;
+
       color: var(--muted);
+
       font-size: 14px;
-      line-height: 1.8;
-      margin-bottom: 26px;
+
+      line-height: 1.9;
+
     }
 
     .result .button + .button {
+
       margin-top: 10px;
+
     }
 
     .hidden {
+
       display: none !important;
+
     }
 
-    @media (max-height: 680px) {
+    @keyframes appear {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(12px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
+
+    }
+
+    @media (max-width: 350px) {
+
       .screen {
-        padding-top: 18px;
-        padding-bottom: 18px;
-      }
 
-      .envelope {
-        margin-bottom: 24px;
-        transform: scale(.85);
-      }
+        padding: 22px 14px;
 
-      .eyebrow {
-        margin-bottom: 18px;
       }
 
       .game-title {
-        font-size: 29px;
-      }
 
-      .game-description {
-        margin-bottom: 16px;
+        font-size: 30px;
+
       }
 
       .puzzle {
-        max-width: min(100%, 330px);
-        margin-bottom: 14px;
+
+        gap: 6px;
+
+        padding: 6px;
+
       }
+
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       *, *::before, *::after {
+
         animation-duration: .01ms !important;
+
         transition-duration: .01ms !important;
+
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
-  <!-- PANTALLA 1: SPLASH SCREEN -->
-  <main>
-    <section id="splash" class="screen active">
-      <div class="content">
+  <!-- PANTALLA 1 -->
 
-        <p class="eyebrow">Un pequeño juego para vos</p>
+  <section id="splash" class="screen active">
 
-        <div class="envelope" aria-hidden="true">
-          <div class="envelope-flap"></div>
-          <div class="envelope-heart">♡</div>
-        </div>
+    <main class="content">
 
-        <h1>
-          ¿Jugamos<br>
-          a descubrir<br>
-          <span>una obra de arte?</span>
-        </h1>
+      <p class="eyebrow">Un regalo para vos</p>
 
-        <p class="description">
-          Hay una imagen esperando a ser descubierta.
-          Solo tenés que unir las cuatro piezas
-          para encontrarla.
+      <div class="envelope" aria-hidden="true">
+
+        <div class="flap"></div>
+
+        <div class="heart">♡</div>
+
+      </div>
+
+      <h1>
+
+        ¿Te animás a<br>
+
+        descubrir mi<br>
+
+        <span>obra de arte?</span>
+
+      </h1>
+
+      <p class="description">
+
+        Hay cuatro piezas esperando a encontrar
+
+        su lugar. Unilas y descubrí la pequeña
+
+        sorpresa que preparé para vos.
+
+      </p>
+
+      <button id="startButton" class="button">
+
+        Empezar el juego <span>♡</span>
+
+      </button>
+
+      <p class="signature">Hecho especialmente para vos.</p>
+
+    </main>
+
+  </section>
+
+  <!-- PANTALLA 2 -->
+
+  <section id="game" class="screen">
+
+    <main class="content">
+
+      <div id="puzzleArea">
+
+        <p class="eyebrow">Tu pequeño desafío</p>
+
+        <h2 class="game-title">Uní las piezas</h2>
+
+        <p class="game-description">
+
+          Tocá dos imágenes para intercambiar sus
+
+          posiciones. Encontrá el orden correcto
+
+          para completar el desafío.
+
         </p>
 
-        <button id="startButton" class="button">
-          Comenzar el juego <span aria-hidden="true">♡</span>
+        <div class="progress">
+
+          <span>Progreso</span>
+
+          <strong id="progressText">0 de 4 piezas</strong>
+
+        </div>
+
+        <div id="puzzle" class="puzzle"></div>
+
+        <p class="hint">
+
+          Elegí una pieza y luego tocá la que
+
+          querés intercambiar con ella.
+
+        </p>
+
+        <div class="actions">
+
+          <button id="shuffleButton" class="button secondary">
+
+            Mezclar
+
+          </button>
+
+          <button id="backButton" class="button secondary">
+
+            Volver
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- DEDICATORIA FINAL -->
+
+      <div id="result" class="result">
+
+        <p class="eyebrow">Lo lograste</p>
+
+        <div id="finalGallery" class="final-gallery">
+
+          <!-- Las cuatro imágenes se agregan con JavaScript -->
+
+        </div>
+
+        <p class="result-label">Y al final del juego...</p>
+
+        <h2>
+
+          Mi obra de<br>
+
+          <span>arte favorita.</span>
+
+        </h2>
+
+        <p class="result-message">
+
+          Si me preguntaran qué es lo más hermoso
+
+          que encontré en este mundo, no necesitaría
+
+          buscar una respuesta. Pensaría en vos. 💜
+
+        </p>
+
+        <button id="againButton" class="button">
+
+          Volver a jugar
+
         </button>
 
-        <p class="signature">Hecho especialmente para vos.</p>
+        <button id="homeButton" class="button secondary">
+
+          Volver al inicio
+
+        </button>
 
       </div>
-    </section>
 
-    <!-- PANTALLA 2: ROMPECABEZAS -->
-    <section id="game" class="screen">
-      <div class="content game-content">
+    </main>
 
-        <div id="puzzleArea">
-          <p class="eyebrow">Tu pequeño desafío</p>
-
-          <h2 class="game-title">Uní las piezas</h2>
-
-          <p class="game-description">
-            Tocá dos piezas para intercambiar sus lugares.
-            Ordenalas hasta descubrir la imagen completa.
-          </p>
-
-          <div class="progress">
-            <span>Tu rompecabezas</span>
-            <strong id="progressText">0 de 4 piezas</strong>
-          </div>
-
-          <div
-            id="puzzle"
-            class="puzzle"
-            aria-label="Rompecabezas de cuatro piezas"
-          ></div>
-
-          <p class="hint">
-            Elegí una pieza y después la que querés intercambiar.
-          </p>
-
-          <div class="game-actions">
-            <button id="shuffleButton" class="button secondary">
-              Mezclar piezas
-            </button>
-            <button id="backButton" class="button secondary">
-              Volver
-            </button>
-          </div>
-        </div>
-
-        <!-- RESULTADO AL COMPLETAR -->
-        <div id="result" class="result">
-          <p class="eyebrow">Lo lograste</p>
-
-          <img
-            id="completeImage"
-            class="complete-image"
-            alt="Ilustración completa de mi obra de arte favorita"
-          >
-
-          <p class="result-label">Si me preguntaran qué es el arte...</p>
-
-          <h2>Mi obra de<br><span>arte favorita.</span></h2>
-
-          <p class="result-message">
-            No hay cuadro ni paisaje que pueda compararse
-            con la belleza que veo en vos. 💜
-          </p>
-
-          <button id="againButton" class="button">
-            Volver a jugar
-          </button>
-
-          <button id="homeButton" class="button secondary">
-            Volver al inicio
-          </button>
-        </div>
-
-      </div>
-    </section>
-  </main>
+  </section>
 
   <script>
-    /*
-      =========================================
-      CONFIGURACIÓN
-      =========================================
 
-      Reemplazá "imagen-de-ella.jpg" por la ruta
-      o URL de la ilustración de tu novia.
+    // ========================================
 
-      La misma imagen se divide automáticamente
-      en cuatro cuadrantes.
-    */
+    // TUS CUATRO IMÁGENES DE GITHUB
 
-    const IMAGE_URL = "imagen-de-ella.jpg";
+    // ========================================
+
+    const imageUrls = [
+
+      "https://raw.githubusercontent.com/braianvillalba/you/refs/heads/main/8e7305be-e9a8-4d65-b084-58743b6f532e.jpeg",
+
+      "https://raw.githubusercontent.com/braianvillalba/you/refs/heads/main/8258e725-0e1f-48a9-916f-b9066e734376.jpeg",
+
+      "https://raw.githubusercontent.com/braianvillalba/you/refs/heads/main/77379cd4-1270-421d-b601-d0ec113a3e72.jpeg",
+
+      "https://raw.githubusercontent.com/braianvillalba/you/refs/heads/main/02000df6-f20a-4350-8fdd-cbc8fd676f50.jpeg"
+
+    ];
 
     const splash = document.getElementById("splash");
+
     const game = document.getElementById("game");
+
     const puzzle = document.getElementById("puzzle");
+
     const puzzleArea = document.getElementById("puzzleArea");
+
     const result = document.getElementById("result");
-    const completeImage = document.getElementById("completeImage");
+
     const progressText = document.getElementById("progressText");
 
+    const finalGallery = document.getElementById("finalGallery");
+
     const startButton = document.getElementById("startButton");
+
     const shuffleButton = document.getElementById("shuffleButton");
+
     const backButton = document.getElementById("backButton");
+
     const againButton = document.getElementById("againButton");
+
     const homeButton = document.getElementById("homeButton");
 
-    // Cada número representa una pieza original.
-    // 0 = arriba izquierda
-    // 1 = arriba derecha
-    // 2 = abajo izquierda
-    // 3 = abajo derecha
+    // El orden correcto es 0, 1, 2, 3.
+
+    // Cada número corresponde a una URL de imageUrls.
 
     let pieces = [0, 1, 2, 3];
+
     let selectedIndex = null;
-    let imageReady = false;
 
-    const image = new Image();
+    // Preparar la galería final.
 
-    image.onload = () => {
-      imageReady = true;
-      updateTiles();
-    };
+    imageUrls.forEach((url, index) => {
 
-    image.onerror = () => {
-      imageReady = false;
-      console.warn(
-        "No se pudo cargar la ilustración. Revisá IMAGE_URL."
-      );
-    };
+      const img = document.createElement("img");
 
-    image.src = IMAGE_URL;
-    completeImage.src = IMAGE_URL;
+      img.src = url;
 
-    // Cambiar entre pantallas.
+      img.alt = `Imagen ${index + 1} de la dedicatoria`;
+
+      img.loading = "eager";
+
+      img.onerror = () => {
+
+        img.alt = "No se pudo cargar esta imagen";
+
+      };
+
+      finalGallery.appendChild(img);
+
+    });
+
     function showScreen(screen) {
+
       splash.classList.remove("active");
+
       game.classList.remove("active");
+
       screen.classList.add("active");
+
       window.scrollTo({ top: 0, behavior: "smooth" });
+
     }
 
-    // Crear las cuatro piezas.
+    // Crear las cuatro piezas del tablero.
+
     function createPuzzle() {
+
       puzzle.innerHTML = "";
 
       pieces.forEach((piece, index) => {
-        const tile = document.createElement("button");
 
-        tile.type = "button";
-        tile.className = "tile";
-        tile.dataset.index = index;
-        tile.setAttribute(
-          "aria-label",
-          `Posición ${index + 1}, pieza ${piece + 1}`
-        );
+        const button = document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "piece";
+
+        button.dataset.index = index;
+
+        const img = document.createElement("img");
+
+        img.src = imageUrls[piece];
+
+        img.alt = `Pieza ${piece + 1}`;
+
+        img.draggable = false;
+
+        img.loading = "eager";
 
         const number = document.createElement("span");
-        number.className = "tile-number";
+
+        number.className = "piece-number";
+
         number.textContent = piece + 1;
 
-        tile.appendChild(number);
-        tile.addEventListener("click", () => selectTile(index));
+        button.appendChild(img);
 
-        puzzle.appendChild(tile);
+        button.appendChild(number);
+
+        button.addEventListener("click", () => {
+
+          selectPiece(index);
+
+        });
+
+        puzzle.appendChild(button);
+
       });
 
-      updateTiles();
+      updatePuzzle();
+
     }
 
-    // Mostrar el cuadrante correspondiente a cada pieza.
-    function updateTiles() {
-      const tiles = puzzle.querySelectorAll(".tile");
+    // Seleccionar e intercambiar piezas.
 
-      tiles.forEach((tile, index) => {
-        const piece = pieces[index];
+    function selectPiece(index) {
 
-        const positions = [
-          "0% 0%",
-          "100% 0%",
-          "0% 100%",
-          "100% 100%"
-        ];
-
-        if (imageReady) {
-          tile.style.backgroundImage = `url("${IMAGE_URL}")`;
-          tile.style.backgroundPosition = positions[piece];
-        } else {
-          tile.style.backgroundImage = "none";
-          tile.style.backgroundPosition = "center";
-        }
-
-        const number = tile.querySelector(".tile-number");
-
-        if (number) {
-          number.textContent = piece + 1;
-        }
-
-        tile.classList.toggle(
-          "selected",
-          selectedIndex === index
-        );
-
-        tile.setAttribute(
-          "aria-label",
-          `Posición ${index + 1}, pieza ${piece + 1}` +
-          (selectedIndex === index ? ", seleccionada" : "")
-        );
-      });
-
-      updateProgress();
-    }
-
-    // Seleccionar una pieza e intercambiarla con otra.
-    function selectTile(index) {
       if (selectedIndex === null) {
+
         selectedIndex = index;
-        updateTiles();
+
+        updatePuzzle();
+
         return;
+
       }
 
       if (selectedIndex === index) {
+
         selectedIndex = null;
-        updateTiles();
+
+        updatePuzzle();
+
         return;
+
       }
 
       const first = selectedIndex;
 
       [pieces[first], pieces[index]] =
+
         [pieces[index], pieces[first]];
 
       selectedIndex = null;
-      updateTiles();
+
+      updatePuzzle();
+
       checkWin();
+
     }
 
-    // Contar cuántas piezas están en el lugar correcto.
-    function updateProgress() {
+    // Actualizar apariencia y progreso.
+
+    function updatePuzzle() {
+
+      const tiles = puzzle.querySelectorAll(".piece");
+
+      tiles.forEach((tile, index) => {
+
+        const piece = pieces[index];
+
+        const img = tile.querySelector("img");
+
+        const number = tile.querySelector(".piece-number");
+
+        img.src = imageUrls[piece];
+
+        img.alt = `Pieza ${piece + 1}`;
+
+        number.textContent = piece + 1;
+
+        tile.classList.toggle(
+
+          "selected",
+
+          selectedIndex === index
+
+        );
+
+        tile.setAttribute(
+
+          "aria-label",
+
+          `Posición ${index + 1}, imagen ${piece + 1}` +
+
+          (selectedIndex === index ? ", seleccionada" : "")
+
+        );
+
+      });
+
       const correct = pieces.filter(
+
         (piece, index) => piece === index
+
       ).length;
 
       progressText.textContent = `${correct} de 4 piezas`;
+
     }
 
-    // Mezclar evitando que el juego empiece resuelto.
+    // Mezclar las imágenes sin dejar el tablero resuelto.
+
     function shufflePieces() {
+
       do {
+
         pieces = [0, 1, 2, 3];
 
         for (let i = pieces.length - 1; i > 0; i--) {
+
           const j = Math.floor(Math.random() * (i + 1));
+
           [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+
         }
+
       } while (
+
         pieces.every((piece, index) => piece === index)
+
       );
 
       selectedIndex = null;
-      createPuzzle();
+
+      puzzleArea.classList.remove("hidden");
 
       result.classList.remove("visible");
-      puzzleArea.classList.remove("hidden");
+
+      createPuzzle();
+
     }
 
-    // Comprobar si las cuatro piezas están ordenadas.
+    // Mostrar la dedicatoria cuando todo está ordenado.
+
     function checkWin() {
+
       const solved = pieces.every(
+
         (piece, index) => piece === index
+
       );
 
       if (!solved) return;
 
       selectedIndex = null;
 
-      // Mostrar la imagen completa y la dedicatoria.
-      completeImage.src = IMAGE_URL;
       puzzleArea.classList.add("hidden");
+
       result.classList.add("visible");
+
     }
 
-    // Eventos de navegación.
+    // Navegación.
+
     startButton.addEventListener("click", () => {
+
       showScreen(game);
+
       shufflePieces();
+
     });
 
     shuffleButton.addEventListener("click", shufflePieces);
 
     backButton.addEventListener("click", () => {
+
       showScreen(splash);
+
     });
 
     againButton.addEventListener("click", () => {
+
       shufflePieces();
+
     });
 
     homeButton.addEventListener("click", () => {
+
       result.classList.remove("visible");
+
       puzzleArea.classList.remove("hidden");
+
       showScreen(splash);
+
     });
 
-    // Preparar el tablero inicial.
+    // Inicializar.
+
     createPuzzle();
+
   </script>
 
 </body>
+
 </html>
